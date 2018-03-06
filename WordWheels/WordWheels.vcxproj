@@ -148,7 +148,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Utility\FileManager.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Wheels\WheelManager.cpp" />
+    <ClCompile Include="Wheels\Wheel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Utility\FileManager.h" />
+    <ClInclude Include="Utility\FileConstants.h" />
+    <ClInclude Include="Wheels\WheelManager.h" />
+    <ClInclude Include="Wheels\Wheel.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
