@@ -1,2 +1,3 @@
 Comment Headers
 Warnings
+Remove system("pause") & #include <stdlib.h>
