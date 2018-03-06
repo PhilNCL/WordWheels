@@ -18,10 +18,13 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FileParsingTests.cpp">
+    <ClCompile Include="googletest\src\gtest-all.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="googletest\src\gtest-all.cc">
+    <ClCompile Include="DictionaryTests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WheelManagerTests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
