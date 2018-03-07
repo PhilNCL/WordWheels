@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WordWheels", "WordWheels.vcxproj", "{27C27CBC-5B2A-40D9-9E5F-D03773E43CE2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C670B74F-B636-428B-9B15-835B7DB1A765} = {C670B74F-B636-428B-9B15-835B7DB1A765}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{006FE052-9989-4152-A639-EEA982FA0CAA}"
 	ProjectSection(SolutionItems) = preProject
@@ -11,6 +14,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTests", "..\UnitTests\UnitTests.vcxproj", "{0863F5F7-0B38-4761-AF35-E4311C4A3179}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C670B74F-B636-428B-9B15-835B7DB1A765} = {C670B74F-B636-428B-9B15-835B7DB1A765}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WordWheelsLib", "..\WordWheelsLib\WordWheelsLib.vcxproj", "{C670B74F-B636-428B-9B15-835B7DB1A765}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +44,14 @@ Global
 		{0863F5F7-0B38-4761-AF35-E4311C4A3179}.Release|x64.Build.0 = Release|x64
 		{0863F5F7-0B38-4761-AF35-E4311C4A3179}.Release|x86.ActiveCfg = Release|Win32
 		{0863F5F7-0B38-4761-AF35-E4311C4A3179}.Release|x86.Build.0 = Release|Win32
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Debug|x64.ActiveCfg = Debug|x64
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Debug|x64.Build.0 = Debug|x64
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Debug|x86.ActiveCfg = Debug|Win32
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Debug|x86.Build.0 = Debug|Win32
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Release|x64.ActiveCfg = Release|x64
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Release|x64.Build.0 = Release|x64
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Release|x86.ActiveCfg = Release|Win32
+		{C670B74F-B636-428B-9B15-835B7DB1A765}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
