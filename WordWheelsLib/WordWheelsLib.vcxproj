@@ -19,14 +19,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Wheels\Dictionary.h" />
     <ClInclude Include="Utility\FileConstants.h" />
     <ClInclude Include="Utility\FileManager.h" />
-    <ClInclude Include="Wheels\Wheel.h" />
     <ClInclude Include="Wheels\WheelManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Wheels\Dictionary.cpp" />
     <ClCompile Include="Utility\FileManager.cpp" />
-    <ClCompile Include="Wheels\Wheel.cpp" />
     <ClCompile Include="Wheels\WheelManager.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

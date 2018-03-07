@@ -3,6 +3,10 @@ Warnings
 Remove system("pause") & #include <stdlib.h>
 Error checks for inFile in WheelManager
 Do a const check
+Order of methods
 
-// Tomorrow: Unit test file manager -> Create text file read in one word.
-FileManager
+
+Alternative implementation of dictionary GetWords
+
+Low Priority:
+Wheel Manager/Dictionary: Loading Multiple Files

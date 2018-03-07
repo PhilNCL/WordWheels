@@ -3,12 +3,12 @@
   <ItemGroup>
     <ClInclude Include="Utility\FileConstants.h" />
     <ClInclude Include="Utility\FileManager.h" />
-    <ClInclude Include="Wheels\Wheel.h" />
     <ClInclude Include="Wheels\WheelManager.h" />
+    <ClInclude Include="Wheels\Dictionary.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utility\FileManager.cpp" />
-    <ClCompile Include="Wheels\Wheel.cpp" />
     <ClCompile Include="Wheels\WheelManager.cpp" />
+    <ClCompile Include="Wheels\Dictionary.cpp" />
   </ItemGroup>
 </Project>
