@@ -10,7 +10,7 @@ public:
 	FileManager();
 	~FileManager();
 
-	bool LoadFile(const std::string& filepath, const std::stringstream& filebuffer);
+	bool LoadFile(const std::string& filepath, std::stringstream& filebuffer);
 protected:
 
 };

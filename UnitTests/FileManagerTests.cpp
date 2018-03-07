@@ -10,8 +10,20 @@ TEST(FileManager, OpeningFiles)
 
 	std::string validFilePath = FileConstants::TEXT_DIRECTORY + "TestFile.txt";
 	std::string invalidFilePath = "InvalidFilePath";
+	std::stringstream dummyStream;
 
-	EXPECT_TRUE(manager.LoadFile(validFilePath, std::stringstream()));
-	EXPECT_FALSE(manager.LoadFile(invalidFilePath, std::stringstream()));
+	EXPECT_TRUE(manager.LoadFile(validFilePath, dummyStream));
+	EXPECT_FALSE(manager.LoadFile(invalidFilePath, dummyStream));
 }
 
+TEST(FileManager, ReadingFiles)
+{
+	FileManager manager;
+
+	std::string			validFilePath = FileConstants::TEXT_DIRECTORY + "TestFile.txt";
+	std::stringstream   sstream;
+	if (manager.LoadFile(validFilePath, sstream))
+	{
+		EXPECT_EQ(sstream.str(),"testing");
+	}
+}

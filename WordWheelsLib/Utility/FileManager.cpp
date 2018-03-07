@@ -15,13 +15,12 @@ FileManager::~FileManager()
 {
 }
 
-bool FileManager::LoadFile(const std::string& filepath, const std::stringstream& filebuffer)
+bool FileManager::LoadFile(const std::string& filepath, std::stringstream& filebuffer)
 {
 	ifstream inFile(filepath);
 	if (inFile)
 	{
-		std::stringstream fileBuffer;
-		fileBuffer << inFile.rdbuf();
+		filebuffer << inFile.rdbuf();
 		return true;
 	}
 	else
