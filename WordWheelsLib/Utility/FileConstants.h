@@ -5,5 +5,5 @@
 
 namespace FileConstants
 {
-	const std::string TEXT_DIRECTORY = "../Data/Text";
+	const std::string TEXT_DIRECTORY = "../Data/Text/";
 }
