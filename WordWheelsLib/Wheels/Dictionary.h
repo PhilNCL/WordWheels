@@ -17,8 +17,8 @@ public:
 	// No test for duplication(?). Assumes minimum word length is 2 characters
 	void AddWord(const std::string& word);
 
-	bool GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList);
-	bool GetWords(const std::string& firstLetters, std::vector<std::string>& wordList);
+	bool GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList) const;
+	bool GetWords(const std::string& firstLetters, std::vector<std::string>& wordList) const;
 	void LoadWordsFromFile(const std::string& filepath);
 
 	void SortAfterAdding(bool shouldSort);

@@ -5,10 +5,12 @@
     <ClInclude Include="Utility\FileManager.h" />
     <ClInclude Include="Wheels\WheelManager.h" />
     <ClInclude Include="Wheels\Dictionary.h" />
+    <ClInclude Include="Utility\UtilityFunctions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utility\FileManager.cpp" />
     <ClCompile Include="Wheels\WheelManager.cpp" />
     <ClCompile Include="Wheels\Dictionary.cpp" />
+    <ClCompile Include="Utility\UtilityFunctions.cpp" />
   </ItemGroup>
 </Project>

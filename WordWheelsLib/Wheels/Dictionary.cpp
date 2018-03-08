@@ -51,7 +51,7 @@ void Dictionary::AddWord(const std::string& word)
 	
 }
 
-bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::string>& wordList)
+bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::string>& wordList) const
 {
 	if (firstLetters.size() != MIN_WORD_SIZE)
 	{
@@ -75,7 +75,7 @@ bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::stri
 	}
 }
 
-bool Dictionary::GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList)
+bool Dictionary::GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList) const
 {
 	if (firstLetters.size() != MIN_WORD_SIZE)
 	{
@@ -115,3 +115,4 @@ void Dictionary::SortAfterAdding(bool shouldSort)
 {
 	doWordSorting = shouldSort;
 }
+

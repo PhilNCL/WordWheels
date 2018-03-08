@@ -9,8 +9,8 @@ class Dictionary;
 class WheelManager
 {
 public:
-	WheelManager();
-	WheelManager(const std::string& filepath);
+	WheelManager(int minWordSize = 2);
+	WheelManager(const std::string& filepath, int minWordSize = 2);
 	~WheelManager();
 
 	void AddWheel(const std::string& wheel);
@@ -18,10 +18,14 @@ public:
 	
 	std::size_t GetNumWheels() const;
 	std::string GetWheel(std::size_t idx);
+
+	// Brute force method
+	void WheelWordsInList(const std::vector<std::string>& potentialWords, std::vector<std::string>& matchingWords);
+	void WheelWordsInDictionary(const Dictionary* dictionary, std::vector<std::string>& matchingWords);
 protected:
 	std::vector<std::string> wheels;
 	
+	const int MIN_WORD_SIZE;
 	
-	std::vector<std::string> WordsInWheels(const std::vector<std::string>& potentialWords);
 };
 

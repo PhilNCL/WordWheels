@@ -6,17 +6,20 @@
 #include <sstream>
 
 #include "../Utility/FileManager.h"
+#include "../Utility/UtilityFunctions.h"
 
-
+#include "Dictionary.h"
 
 // Declarations
 using std::ifstream;
 
-WheelManager::WheelManager()
+WheelManager::WheelManager(int minWordSize) :
+MIN_WORD_SIZE(minWordSize)
 {
 }
 
-WheelManager::WheelManager(const std::string& filepath)
+WheelManager::WheelManager(const std::string& filepath, int minWordSize) :
+	WheelManager(minWordSize)
 {
 	LoadWheelsFromFile(filepath);
 }
@@ -71,7 +74,44 @@ std::string WheelManager::GetWheel(std::size_t idx)
 	}
 }
 
-std::vector<std::string> WordsInWheels(const std::vector<std::string>& potentialWords)
+void WheelManager::WheelWordsInList(const std::vector<std::string>& potentialWords, std::vector<std::string>& matchingWords)
 {
-	return std::vector<std::string>();
+	for (auto& wheel : wheels)
+	{
+		for (auto& word : potentialWords)
+		{
+			if (wheel.find(word) != std::string::npos) 
+			{
+				matchingWords.push_back(word);
+			}
+		}
+	}
+	
 }
+
+
+void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vector<std::string>& matchingWords)
+{
+
+	for (auto& wheel : wheels)
+	{
+		std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
+		
+		for (std::size_t startChar = 0; startChar < endChar; ++startChar)
+		{
+			std::string key = wheel.substr(startChar, MIN_WORD_SIZE);
+			std::size_t remainingWordLength = wheel.length() - startChar;
+			for (std::size_t length = MIN_WORD_SIZE; length < remainingWordLength; ++length)
+			{
+				std::vector<std::string> potentialWords;
+				dictionary->GetWords(key, length, potentialWords);
+				for (auto& word : potentialWords)
+				{
+					ReverseStringCompare(word, wheel.substr(startChar, remainingWordLength));
+				}
+			}
+		
+		}
+	}
+}
+
