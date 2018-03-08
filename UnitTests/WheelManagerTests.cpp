@@ -61,3 +61,27 @@ TEST(WheelManager, ParseWheelFile)
 
 
 
+TEST(WheelManager, FindWordsInWheels)
+{
+	const int NUM_WHEELS = 8;
+	const int LETTERS_PER_WHEEL = 10;
+	WheelManager wheelManager;
+	wheelManager.LoadWheelsFromFile(FileConstants::TEXT_DIRECTORY + std::string("wheels.txt"));
+
+	EXPECT_EQ(wheelManager.GetNumWheels(), NUM_WHEELS);
+
+	const std::string wheels[NUM_WHEELS] = { "YGVLAINSQC",
+		"SHYIXBODLW",
+		"HCFQIJBPRE",
+		"QUGFKYCMAZ",
+		"FSKRVJNUQT",
+		"RTNFQKMVDI",
+		"EQZHTFDUON",
+		"JAYFRGWEXP" };
+
+	for (int i = 0; i < NUM_WHEELS; ++i)
+	{
+		EXPECT_EQ(wheelManager.GetWheel(i).length(), LETTERS_PER_WHEEL);
+		EXPECT_EQ(wheelManager.GetWheel(i), wheels[i]);
+	}
+}

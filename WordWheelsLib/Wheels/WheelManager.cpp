@@ -70,3 +70,8 @@ std::string WheelManager::GetWheel(std::size_t idx)
 		return wheels[idx];
 	}
 }
+
+std::vector<std::string> WordsInWheels(const std::vector<std::string>& potentialWords)
+{
+	return std::vector<std::string>();
+}
