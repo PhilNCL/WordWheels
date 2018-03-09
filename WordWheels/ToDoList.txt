@@ -16,3 +16,5 @@ Alternative implementation of dictionary GetWords
 Dictionary and wheels are highly coupled
 Micro optimisation: Diction ma [tchbox]
 N >> M M >> N
+
+Dictionary: Doesn't distinguish case.

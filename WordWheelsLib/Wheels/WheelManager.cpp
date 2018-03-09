@@ -78,13 +78,7 @@ void WheelManager::WheelWordsInList(const std::vector<std::string>& potentialWor
 {
 	for (auto& wheel : wheels)
 	{
-		for (auto& word : potentialWords)
-		{
-			if (wheel.find(word) != std::string::npos) 
-			{
-				matchingWords.push_back(word);
-			}
-		}
+		FindSubstringsFromList(wheel, potentialWords, matchingWords);
 	}
 	
 }
@@ -92,25 +86,15 @@ void WheelManager::WheelWordsInList(const std::vector<std::string>& potentialWor
 
 void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vector<std::string>& matchingWords)
 {
-
 	for (auto& wheel : wheels)
 	{
 		std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
 		
 		for (std::size_t startChar = 0; startChar < endChar; ++startChar)
 		{
-			std::string key = wheel.substr(startChar, MIN_WORD_SIZE);
-			std::size_t remainingWordLength = wheel.length() - startChar;
-			for (std::size_t length = MIN_WORD_SIZE; length < remainingWordLength; ++length)
-			{
-				std::vector<std::string> potentialWords;
-				dictionary->GetWords(key, length, potentialWords);
-				for (auto& word : potentialWords)
-				{
-					ReverseStringCompare(word, wheel.substr(startChar, remainingWordLength));
-				}
-			}
-		
+			std::vector<std::string> potentialWords;
+			dictionary->GetWords(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
+			FindSubstringsFromList(wheel, potentialWords, matchingWords);
 		}
 	}
 }

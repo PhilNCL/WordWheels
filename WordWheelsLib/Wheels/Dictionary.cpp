@@ -2,7 +2,7 @@
 // words not in English e.g. diacritical marks
 #include "Dictionary.h"
 
-#include <algorithm> // find(), sort()
+#include <algorithm> // find(), sort(), transform()
 #include <cassert>
 
 #include "../Utility/FileManager.h"
@@ -32,23 +32,15 @@ void Dictionary::AddWord(const std::string& word)
 	{
 		return;
 	}
-
-	auto& wordList = dictionary[word.substr(0, MIN_WORD_SIZE)];
-	if (wordList.empty())
-	{
-		wordList = std::vector<std::vector<std::string>>(MAX_WORD_SIZE);
-	}
-
-	auto& wordListLength = wordList[word.length() - 1];
-	if (std::find(wordListLength.cbegin(), wordListLength.cend(), word) == wordListLength.cend())
-	{
-		wordListLength.push_back(word);
-		if (doWordSorting)
-		{
-			std::sort(wordListLength.begin(), wordListLength.end(), [](const std::string& lhs, const std::string& rhs) { return lhs.compare(rhs) < 0;});
-		}
-	}
+	std::string keyWord = word;
+	std::transform(word.begin(), word.end(), keyWord.begin(), ::tolower);
 	
+	auto& wordList = dictionary[keyWord.substr(0, MIN_WORD_SIZE)];
+	wordList.push_back(keyWord);
+	if (doWordSorting)
+	{
+		std::sort(wordList.begin(), wordList.end());
+	}
 }
 
 bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::string>& wordList) const
@@ -58,38 +50,17 @@ bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::stri
 		return false;
 	}
 
-	auto potentialWordList = dictionary.find(firstLetters);
+	std::string keyWord = firstLetters;
+	std::transform(firstLetters.begin(), firstLetters.end(), keyWord.begin(), ::tolower);
+
+	auto potentialWordList = dictionary.find(keyWord);
 	if (potentialWordList == dictionary.end())
 	{
 		return false;
 	}
 	else
 	{
-		for (std::size_t wordSize = 0; wordSize < MAX_WORD_SIZE; ++wordSize)
-		{
-			auto& wordsOfSize = potentialWordList->second[wordSize];
-			wordList.insert(wordList.end(), wordsOfSize.begin(), wordsOfSize.end());
-		}
-	
-		return true;
-	}
-}
-
-bool Dictionary::GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList) const
-{
-	if (firstLetters.size() != MIN_WORD_SIZE)
-	{
-		return false;
-	}
-
-	auto potentialWordList = dictionary.find(firstLetters);
-	if (potentialWordList == dictionary.end())
-	{
-		return false;
-	}
-	else
-	{
-		wordList = potentialWordList->second[numLetters - 1];
+		wordList = potentialWordList->second;
 		return true;
 	}
 }

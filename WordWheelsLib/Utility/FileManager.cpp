@@ -21,6 +21,7 @@ bool FileManager::LoadFile(const std::string& filepath, std::stringstream& fileb
 	if (inFile)
 	{
 		filebuffer << inFile.rdbuf();
+		inFile.close();
 		return true;
 	}
 	else

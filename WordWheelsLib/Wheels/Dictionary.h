@@ -14,17 +14,16 @@ public:
 	Dictionary(const std::string& filepath, int maxValidWordSize = DEFAULT_MAX_WORD_SIZE, int minValidWordSize = DEFAULT_MIN_WORD_SIZE);
 	~Dictionary();
 
-	// No test for duplication(?). Assumes minimum word length is 2 characters
+	// No test for duplication(?). Words with length outside of the range MIN_WORD_SIZE/MAX_WORD_SIZE will not be added
 	void AddWord(const std::string& word);
-
-	bool GetWords(const std::string& firstLetters, std::size_t numLetters, std::vector<std::string>& wordList) const;
+	// firstLetters must be equal to MIN_WORD_SIZE
 	bool GetWords(const std::string& firstLetters, std::vector<std::string>& wordList) const;
 	void LoadWordsFromFile(const std::string& filepath);
 
 	void SortAfterAdding(bool shouldSort);
 protected:
 	// Map from the first MIN_WORD_SIZE characters of the word to the word
-	std::map<std::string, std::vector<std::vector<std::string>>> dictionary;
+	std::map< std::string, std::vector<std::string> > dictionary;
 
 	const int MIN_WORD_SIZE;
 	const int MAX_WORD_SIZE;
