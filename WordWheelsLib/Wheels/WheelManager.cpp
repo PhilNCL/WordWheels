@@ -36,18 +36,10 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 	if (fileManager.LoadFile(filepath, wheelFile))
 	{
 		int numWheels;
-		int numLettersPerWheel;
+		int lettersPerWheel;
 
-		wheelFile >> numWheels;
-		wheelFile >> numLettersPerWheel;
-
-		std::string wheel;
-		while (wheelFile >> wheel)
-		{
-			wheels.push_back(wheel);
-			assert(wheel.length() == numLettersPerWheel);
-		}
-		assert(wheels.size() == numWheels);
+		ReadHeader(wheelFile, numWheels, lettersPerWheel);
+		ReadWheels(wheelFile, numWheels, lettersPerWheel);
 	}
 
 }
@@ -88,14 +80,36 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vec
 {
 	for (auto& wheel : wheels)
 	{
-		std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
-		
-		for (std::size_t startChar = 0; startChar < endChar; ++startChar)
-		{
-			std::vector<std::string> potentialWords;
-			dictionary->GetWords(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
-			FindSubstringsFromList(wheel.substr(startChar), potentialWords, matchingWords);
-		}
+		WordsInDictionary(wheel, dictionary, matchingWords);
 	}
+}
+
+void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, std::vector<std::string>& matchingWords)
+{
+	std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
+
+	for (std::size_t startChar = 0; startChar < endChar; ++startChar)
+	{
+		std::vector<std::string> potentialWords;
+		dictionary->GetWordsFromKey(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
+		FindSubstringsFromList(wheel.substr(startChar), potentialWords, matchingWords);
+	}
+}
+
+void WheelManager::ReadHeader(std::stringstream & wheelFile, int & numWheels, int & lettersPerWheel)
+{
+	wheelFile >> numWheels;
+	wheelFile >> lettersPerWheel;
+}
+
+void  WheelManager::ReadWheels(std::stringstream& wheelFile, int numWheels, int lettersPerWheel)
+{
+	std::string wheel;
+	while (wheelFile >> wheel)
+	{
+		wheels.push_back(wheel);
+		assert(wheel.length() == lettersPerWheel);
+	}
+	assert(wheels.size() == numWheels);
 }
 

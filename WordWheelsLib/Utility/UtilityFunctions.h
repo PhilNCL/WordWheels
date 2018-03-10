@@ -11,3 +11,5 @@ void FindSubstringsFromList(const std::string& word, const std::vector<std::stri
 
 // Returns true if substring is in string [case sensitive]
 bool IsSubstringInString(const std::string& string, const std::string& substring);
+
+void MakeUpperCase(const std::string& originalString, std::string& upperCaseString);

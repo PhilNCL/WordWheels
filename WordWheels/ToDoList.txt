@@ -17,4 +17,7 @@ Dictionary and wheels are highly coupled
 Micro optimisation: Diction ma [tchbox]
 N >> M M >> N
 
-Dictionary: Doesn't distinguish case.
+system("Pause")
+Asserts on loading file not good
+
+// Dead ends -> Sorting words, dictionary by key and length

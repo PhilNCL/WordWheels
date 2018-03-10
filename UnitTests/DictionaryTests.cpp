@@ -12,7 +12,6 @@ using namespace FileConstants;
 TEST(Dictionary, AddingWords)
 {
 	Dictionary dictionary;
-	dictionary.SortAfterAdding(true);
 	dictionary.AddWord("Message");
 	dictionary.AddWord("Merlin");
 	dictionary.AddWord("My");
@@ -21,19 +20,19 @@ TEST(Dictionary, AddingWords)
 	dictionary.AddWord("Asparagus");
 
 	std::vector<std::string> words;
-	dictionary.GetWords("My", words);
+	dictionary.GetWordsFromKey("My", words);
 	EXPECT_EQ(words.size(), 1);
 	EXPECT_EQ(words.at(0), "MY");
 	
 	words.clear();
-	dictionary.GetWords("Me", words);
+	dictionary.GetWordsFromKey("Me", words);
 	EXPECT_EQ(words.size(), 3);
-	EXPECT_EQ(words.at(0), "MELODIC");
+	EXPECT_EQ(words.at(0), "MESSAGE"); 
 	EXPECT_EQ(words.at(1), "MERLIN");
-	EXPECT_EQ(words.at(2), "MESSAGE");
+	EXPECT_EQ(words.at(2), "MELODIC");
 
 	words.clear();
-	dictionary.GetWords("As", words);
+	dictionary.GetWordsFromKey("As", words);
 	EXPECT_EQ(words.size(), 1);
 }
 
@@ -43,19 +42,19 @@ TEST(Dictionary, LoadingFromFile)
 	dictionary.LoadWordsFromFile(TEST_DICTIONARY_PATH);
 
 	std::vector<std::string> words;
-	dictionary.GetWords("ab", words);
+	dictionary.GetWordsFromKey("ab", words);
 	EXPECT_EQ(words.size(), 4);
 
 	words.clear();
-	dictionary.GetWords("al", words);
+	dictionary.GetWordsFromKey("al", words);
 	EXPECT_EQ(words.size(), 2);
 
 	words.clear();
-	dictionary.GetWords("br", words);
+	dictionary.GetWordsFromKey("br", words);
 	EXPECT_EQ(words.size(), 1);
 
 	words.clear();
-	dictionary.GetWords("am", words);
+	dictionary.GetWordsFromKey("am", words);
 	EXPECT_EQ(words.size(), 1);
 }
 
@@ -70,69 +69,69 @@ TEST(Dictionary, CaseInsensitive)
 
 	std::vector<std::string> words;
 
-	dictionary.GetWords("Ko", words);
+	dictionary.GetWordsFromKey("Ko", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("kO", words);
+	dictionary.GetWordsFromKey("kO", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("ko", words);
+	dictionary.GetWordsFromKey("ko", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("KO", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-
-	dictionary.GetWords("Gi", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("gI", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("GI", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("gi", words);
+	dictionary.GetWordsFromKey("KO", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
 
-
-	dictionary.GetWords("Tu", words);
+	dictionary.GetWordsFromKey("Gi", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("tU", words);
+	dictionary.GetWordsFromKey("gI", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("TU", words);
+	dictionary.GetWordsFromKey("GI", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("tu", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-
-	dictionary.GetWords("Aa", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("aA", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("AA", words);
-	EXPECT_EQ(words.size(), 1);
-	words.clear();
-	dictionary.GetWords("aa", words);
+	dictionary.GetWordsFromKey("gi", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
 
-	dictionary.GetWords("Pa", words);
+
+	dictionary.GetWordsFromKey("Tu", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("pA", words);
+	dictionary.GetWordsFromKey("tU", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("PA", words);
+	dictionary.GetWordsFromKey("TU", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
-	dictionary.GetWords("pa", words);
+	dictionary.GetWordsFromKey("tu", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+	dictionary.GetWordsFromKey("Aa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("aA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("AA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("aa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+	dictionary.GetWordsFromKey("Pa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("pA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("PA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWordsFromKey("pa", words);
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
 }

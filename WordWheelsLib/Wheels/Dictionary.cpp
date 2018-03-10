@@ -2,10 +2,11 @@
 // words not in English e.g. diacritical marks
 #include "Dictionary.h"
 
-#include <algorithm> // find(), sort(), transform()
+#include <algorithm> // find(), sort()
 #include <cassert>
 
 #include "../Utility/FileManager.h"
+#include "../Utility/UtilityFunctions.h"
 
 Dictionary::Dictionary(int maxValidWordSize, int minValidWordSize) :
 	MIN_WORD_SIZE(minValidWordSize), MAX_WORD_SIZE(maxValidWordSize)
@@ -28,47 +29,17 @@ Dictionary::~Dictionary()
 
 void Dictionary::AddWord(const std::string& word)
 {
-	if (word.size() < MIN_WORD_SIZE || word.size() > MAX_WORD_SIZE)
+	if (!isValidWord(word))
 	{
 		return;
 	}
-	std::string keyWord = word.substr(0, MIN_WORD_SIZE);
-	std::transform(keyWord.begin(), keyWord.end(), keyWord.begin(), ::tolower);
+
+	std::string upperCase;
+	MakeUpperCase(word, upperCase);
+	std::string keyWord = upperCase.substr(0, MIN_WORD_SIZE);
 	
 	auto& wordList = dictionary[keyWord];
-	wordList.push_back(word);
-	if (doWordSorting)
-	{
-		std::sort(wordList.begin(), wordList.end());
-	}
-}
-
-bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::string>& wordList) const
-{
-	if (firstLetters.size() != MIN_WORD_SIZE)
-	{
-		return false;
-	}
-
-	std::string keyWord = firstLetters;
-	std::transform(firstLetters.begin(), firstLetters.end(), keyWord.begin(), ::tolower);
-
-	auto potentialWordList = dictionary.find(keyWord);
-	if (potentialWordList == dictionary.end())
-	{
-		return false;
-	}
-	else
-	{
-		for (auto& word : potentialWordList->second)
-		{
-			std::string upperCase = word;
-			std::transform(word.begin(), word.end(), upperCase.begin(), ::toupper);
-			wordList.push_back(upperCase);
-		}
-
-		return true;
-	}
+	wordList.push_back(upperCase);
 }
 
 void Dictionary::LoadWordsFromFile(const std::string& filepath)
@@ -78,18 +49,57 @@ void Dictionary::LoadWordsFromFile(const std::string& filepath)
 
 	if (fileManager.LoadFile(filepath, dictionaryFile))
 	{
-		std::string word;
-		while (dictionaryFile >> word)
-		{
-			AddWord(word);
-		}
-	
+		LoadWords(dictionaryFile);
 	}
 
 }
 
-void Dictionary::SortAfterAdding(bool shouldSort)
+void Dictionary::LoadWords(std::stringstream& dicFile)
 {
-	doWordSorting = shouldSort;
+	std::string word;
+	while (dicFile >> word)
+	{
+		AddWord(word);
+	}
 }
 
+void Dictionary::GetWordsFromKey(const std::string& key, std::vector<std::string> & keyWords) const
+{
+	if (!isValidKey(key))
+	{
+		return;
+	}
+
+	std::string keyWord = key;
+	std::transform(key.begin(), key.end(), keyWord.begin(), ::toupper);
+
+	auto keyIter = dictionary.find(keyWord);
+	if (keyIter != dictionary.end())
+	{
+		keyWords = keyIter->second;
+	}
+}
+
+bool Dictionary::isValidWord(const std::string& word) const
+{
+	if (word.size() < MIN_WORD_SIZE || word.size() > MAX_WORD_SIZE)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+bool Dictionary::isValidKey(const std::string& key) const
+{
+	if (key.size() != MIN_WORD_SIZE)
+	{
+		return false;
+	}
+	else
+	{
+		return true;
+	}
+}

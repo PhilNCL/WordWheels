@@ -49,3 +49,12 @@ TEST(Utility, AllSubstringsInList)
 	iter = std::find(matchingSubStrings.begin(), matchingSubStrings.end(), "AN");
 	EXPECT_TRUE(iter != matchingSubStrings.end());
 }
+
+TEST(Utility, MakeUpperCase)
+{
+	const std::string lowerCase = "verySmallLetters";
+	std::string upperCase;
+
+	MakeUpperCase(lowerCase, upperCase);
+	EXPECT_EQ(upperCase, "VERYSMALLLETTERS");
+}

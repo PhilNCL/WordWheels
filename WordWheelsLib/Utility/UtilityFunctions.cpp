@@ -1,5 +1,6 @@
 #include "UtilityFunctions.h"
 
+#include <algorithm> // transform()
 #include <cassert>
 
 bool ReverseStringCompare(const std::string& left, const std::string& right)
@@ -29,4 +30,9 @@ bool IsSubstringInString(const std::string& string, const std::string& substring
 	{
 		return false;
 	}
+}
+
+void MakeUpperCase(const std::string& originalString, std::string& upperCaseString)
+{
+	std::transform(originalString.begin(), originalString.end(), upperCaseString.begin(), ::toupper);
 }
