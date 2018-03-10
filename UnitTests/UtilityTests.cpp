@@ -3,7 +3,7 @@
 
 #include <Utility\UtilityFunctions.h>
 
-TEST(Utility, IsSubstringInString)
+TEST(UtilityString, IsSubstringInString)
 {
 	const std::string SEARCH_STRING = "ANGELEYES";
 
@@ -25,7 +25,7 @@ TEST(Utility, IsSubstringInString)
 	EXPECT_FALSE(IsSubstringInString(SEARCH_STRING, "eyes"));
 }
 
-TEST(Utility, AllSubstringsInList)
+TEST(UtilityString, AllSubstringsInList)
 {
 	const std::string SEARCH_STRING = "ANGELEYES";
 	const std::vector<std::string> SEARCH_LIST = { "ANGEL", "EYES", "GEL", "ES", "AN", "ANGELEYESSS", "BANANA",  "LEG", "angel" };
@@ -50,11 +50,76 @@ TEST(Utility, AllSubstringsInList)
 	EXPECT_TRUE(iter != matchingSubStrings.end());
 }
 
-TEST(Utility, MakeUpperCase)
+TEST(UtilityString, MakeUpperCase)
 {
 	const std::string lowerCase = "verySmallLetters";
 	std::string upperCase;
 
 	MakeUpperCase(lowerCase, upperCase);
 	EXPECT_EQ(upperCase, "VERYSMALLLETTERS");
+}
+
+
+TEST(UtilityString, MakeStringUnique)
+{
+	std::string testString = "VERYSMALLLETTERS";
+
+	MakeStringUnique(testString);
+	EXPECT_EQ(testString, "AELMRSTVY");
+}
+
+
+TEST(Utility, DecrementIndices)
+{
+	std::vector<std::size_t> indices = { 7, 8, 8, 4, 8, 8 };
+
+	DecrementIndices(indices);
+	EXPECT_EQ(indices[0], 7);
+	EXPECT_EQ(indices[1], 8);
+	EXPECT_EQ(indices[2], 8);
+	EXPECT_EQ(indices[3], 4);
+	EXPECT_EQ(indices[4], 8);
+	EXPECT_EQ(indices[5], 7);
+
+	for (int i = 0; i < 7; ++i)
+	{
+		DecrementIndices(indices);
+	}
+
+	EXPECT_EQ(indices[0], 7);
+	EXPECT_EQ(indices[1], 8);
+	EXPECT_EQ(indices[2], 8);
+	EXPECT_EQ(indices[3], 4);
+	EXPECT_EQ(indices[4], 8);
+	EXPECT_EQ(indices[5], 0);
+
+	DecrementIndices(indices);
+	EXPECT_EQ(indices[0], 7);
+	EXPECT_EQ(indices[1], 8);
+	EXPECT_EQ(indices[2], 8);
+	EXPECT_EQ(indices[3], 4);
+	EXPECT_EQ(indices[4], 7);
+	EXPECT_EQ(indices[5], 0);
+
+	for (int i = 0; i < 8; ++i)
+	{
+		DecrementIndices(indices);
+	}
+	EXPECT_EQ(indices[0], 7);
+	EXPECT_EQ(indices[1], 8);
+	EXPECT_EQ(indices[2], 8);
+	EXPECT_EQ(indices[3], 3);
+	EXPECT_EQ(indices[4], 0);
+	EXPECT_EQ(indices[5], 0);
+
+	for (int i = 0; i < 8; ++i)
+	{
+		DecrementIndices(indices);
+	}
+	EXPECT_EQ(indices[0], 7);
+	EXPECT_EQ(indices[1], 8);
+	EXPECT_EQ(indices[2], 3);
+	EXPECT_EQ(indices[3], 0);
+	EXPECT_EQ(indices[4], 0);
+	EXPECT_EQ(indices[5], 0);
 }

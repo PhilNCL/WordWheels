@@ -1,23 +1,35 @@
 Comment Headers
 Warnings
 Remove system("pause") & #include <stdlib.h>
-Error checks for inFile in WheelManager
+
 Do a const check
 Order of methods
+Switch to release mode
 
 Low Priority:
 Wheel Manager/Dictionary: Loading Multiple Files
 LoadWheelsFromFile Make bool
-Make sort bool based on wordlist is sorted
-Alternative implementation of dictionary GetWords
 
 Dictionary and wheels are highly coupled
 Micro optimisation: Diction ma [tchbox]
 N >> M M >> N
+M^(N - 2) 
+M capped at 24 
+can often bail early i.e. if no XZ bail
+N - Microoptimisations take MIN_WORD_SIZE might be valid in practice.
 
 system("Pause")
-Asserts on loading file not good
+
 
 // Dead ends -> Sorting words, dictionary by key and length
-
+// Error in instructions
 // Don't add words to the dictionary which are larger than M
+
+1) What if some quantities are negative? e.g. numLettersPerWord numWheels at least MIN_WORD_SIZE
+2) Asserts on loading file not good
+3) Error checking for loading files
+4) If you AddWheels and then LoadFile will break
+5) What happens if don't call initalise wheels
+6) change validword form numLetters to numWheels
+7) RVO e.g. Build String
+8) Utility and Utility String

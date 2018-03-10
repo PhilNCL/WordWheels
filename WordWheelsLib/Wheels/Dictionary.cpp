@@ -72,8 +72,8 @@ void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) co
 		return;
 	}
 
-	std::string keyWord = key;
-	std::transform(key.begin(), key.end(), keyWord.begin(), ::toupper);
+	std::string keyWord;
+	MakeUpperCase(key, keyWord);
 
 	auto keyIter = dictionary.find(keyWord);
 	if (keyIter != dictionary.end())

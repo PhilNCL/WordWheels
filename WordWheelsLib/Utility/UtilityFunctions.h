@@ -5,6 +5,8 @@
 
 #include "CommonTypes.h"
 
+class Dictionary;
+
 // Compare two strings of equal size starting from the last character and moving backwards
 bool ReverseStringCompare(const std::string& left, const std::string& right);
 
@@ -15,3 +17,12 @@ void FindSubstringsFromList(const std::string& word, const Wheels::StringVec& po
 bool IsSubstringInString(const std::string& string, const std::string& substring);
 
 void MakeUpperCase(const std::string& originalString, std::string& upperCaseString);
+
+// Alphabetical order, does no case check
+void MakeStringUnique(std::string& sameCaseString);
+
+void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);
+
+
+// Non string utility functions***************
+void DecrementIndices(std::vector<std::size_t>& indices);

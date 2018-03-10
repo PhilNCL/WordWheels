@@ -40,7 +40,9 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 		std::size_t lettersPerWheel;
 
 		ReadHeader(wheelFile, numWheels, lettersPerWheel);
+		InitaliseWheels(numWheels, lettersPerWheel);
 		ReadWheels(wheelFile, numWheels, lettersPerWheel);
+		RemoveDuplicateLetters();
 	}
 
 }
@@ -76,40 +78,92 @@ void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& 
 }
 
 
+
 void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
 {
-	for (auto& wheel : wheels)
+
+	// TODO: What if wheels is empty???
+	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
-		WordsInDictionary(wheel, dictionary, matchingWords);
+		StringVec potentialWords;
+		CheckWheelCombinations(startCharIdx);
 	}
+}
+
+// Requires valid input
+void WheelManager::CheckWheelCombinations(std::size_t startCharIdx) const
+{
+	const int FIRST_WHEEL_IDX = 0;
+	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
+
+	// Create Maximum Indices
+	std::vector<std::size_t> maximumIndices;
+	for (std::size_t wheelIdx = FIRST_WHEEL_IDX; wheelIdx < wheels.size(); ++wheelIdx)
+	{
+		maximumIndices.push_back(wheels[wheelIdx].length());
+	}
+
+	std::vector<std::size_t> indices = maximumIndices;
+	std::vector<std::size_t> endIndices = maximumIndices;
+	indices[0] = startCharIdx;
+
+//	while (!isFinalConfiguration(indices))
+	//{
+		// Build String
+	//	std::string wheelConfiguration;
+		//BuildString(startCharIdx, maximumIndices, wheelConfiguration);
+
+		// Increament Indicies
+
+		//WordsInDictionary(wheelConfiguration, MIN_WORD_SIZE, dictionary, matchingWords);
+//	}
 }
 
 void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, StringVec& matchingWords) const
 {
-	std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
 
-	for (std::size_t startChar = 0; startChar < endChar; ++startChar)
-	{
-		StringVec potentialWords;
-		dictionary->GetWordsFromKey(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
-		FindSubstringsFromList(wheel.substr(startChar), potentialWords, matchingWords);
-	}
 }
 
 void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const
 {
-	wheelFile >> numWheels;
 	wheelFile >> lettersPerWheel;
+	wheelFile >> numWheels;
 }
+
+void WheelManager::InitaliseWheels(std::size_t numWheels, std::size_t lettersPerWheel)
+{
+	wheels.resize(numWheels);
+	for (auto& wheel : wheels)
+	{
+		wheel.resize(lettersPerWheel);
+	}
+}
+
 
 void  WheelManager::ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel)
 {
-	std::string wheel;
-	while (wheelFile >> wheel)
+	std::string row;
+	StringVec rows;
+	while (wheelFile >> row)
 	{
-		wheels.push_back(wheel);
-		assert(wheel.length() == lettersPerWheel);
+		rows.push_back(row);
+		assert(row.length() == numWheels);
 	}
-	assert(wheels.size() == numWheels);
+	assert(rows.size() == lettersPerWheel);
+
+	for (std::size_t charIdx = 0; charIdx < rows.size(); ++charIdx)
+	{
+		for (std::size_t wheelIdx = 0; wheelIdx < wheels.size(); ++wheelIdx)
+		{
+			wheels[wheelIdx][charIdx] = rows[charIdx][wheelIdx];
+		}
+	}
 }
 
+void WheelManager::RemoveDuplicateLetters()
+{
+	for (auto& wheel : wheels)
+	{
+		MakeStringUnique(wheel);
+	}
+}

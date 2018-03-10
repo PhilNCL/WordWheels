@@ -2,6 +2,9 @@
 
 #include <algorithm> // transform()
 #include <cassert>
+#include <set>
+
+#include "../Wheels/Dictionary.h"
 
 using namespace Wheels;
 
@@ -14,11 +17,16 @@ bool ReverseStringCompare(const std::string& left, const std::string& right)
 
 void FindSubstringsFromList(const std::string& string, const StringVec& potentialWords, StringVec& matchingStrings)
 {
-	for (auto& str : potentialWords)
+	for (auto& subStr : potentialWords)
 	{
-		if (IsSubstringInString(string, str))
+		if (subStr.length() > string.length())
 		{
-			matchingStrings.push_back(str);
+			continue;
+		}
+
+		if (IsSubstringInString(string, subStr))
+		{
+			matchingStrings.push_back(subStr);
 		}
 	}
 }
@@ -39,4 +47,35 @@ void MakeUpperCase(const std::string& originalString, std::string& upperCaseStri
 {
 	upperCaseString.resize(originalString.length());
 	std::transform(originalString.begin(), originalString.end(), upperCaseString.begin(), ::toupper);
+}
+
+void MakeStringUnique(std::string& upperCaseString) 
+{
+	std::sort(upperCaseString.begin(), upperCaseString.end());
+	auto lastChar = std::unique(upperCaseString.begin(), upperCaseString.end());
+	upperCaseString.erase(lastChar, upperCaseString.end());
+}
+
+void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, StringVec& matchingWords)
+{
+	std::size_t endChar = string.length() - minWordSize;
+
+	for (std::size_t startChar = 0; startChar < endChar; ++startChar)
+	{
+		StringVec potentialWords;
+		dictionary->GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
+		FindSubstringsFromList(string.substr(startChar), potentialWords, matchingWords);
+	}
+}
+
+void DecrementIndices(std::vector<std::size_t>& indices)
+{
+	for (auto index = indices.rbegin(); index != indices.rend(); ++index)
+	{
+		if (*index)
+		{
+			--(*index);
+			break;
+		}
+	}
 }

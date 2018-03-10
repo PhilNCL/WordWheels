@@ -33,7 +33,11 @@ protected:
 private: 
 	// Helper functions for LoadWheelsFromFile()
 	void ReadHeader(std::stringstream& wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const;
+	void InitaliseWheels(std::size_t numWheels, std::size_t lettersPerWheel);
 	void ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel);
-	
+
+	void CheckWheelCombinations(std::size_t startCharIdx) const;
+	// Duplicate letters on a wheel have no effect on the number of outputs
+	void RemoveDuplicateLetters();
 };
 
