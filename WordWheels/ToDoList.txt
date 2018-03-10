@@ -33,7 +33,8 @@ system("Pause")
 6) change validword form numLetters to numWheels
 7) RVO e.g. Build String
 8) Utility and Utility String
-
+9) IsFinalConfig into utility
+10) Reduce magic numbers in tests
 
 Checks:
 1) All functions have capital letter

@@ -88,7 +88,7 @@ TEST(WheelManager, ParseWheelFile)
 
 TEST(WheelManager, FindDictionaryInWheels)
 {
-	WheelManager wheelManager(TEST_WHEELS_PATH);
+	WheelManager wheelManager(TEST_SMALL_WHEELS_PATH);
 	Dictionary dictionary(TEST_DICTIONARY_PATH);
 
 	std::vector<std::string> foundWords;
@@ -113,6 +113,58 @@ TEST(WheelManager, FindDictionaryInWheels)
 	iter = std::find(foundWords.begin(), foundWords.end(), "AM");
 	EXPECT_FALSE(iter != foundWords.end());
 }
+
+TEST(WheelManager, BuildString)
+{
+	WheelManager wheelManager(WHEELS_PATH);
+	std::vector<std::size_t> config(10, 0);
+
+	std::string testString = wheelManager.BuildString(config);
+	EXPECT_EQ("EAFFABBDAC", testString);
+
+	config[0] = 1;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FAFFABBDAC", testString);
+
+	config[1] = 6;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTFFABBDAC", testString);
+
+	config[2] = 2;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKFABBDAC", testString);
+
+	config[3] = 4;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQABBDAC", testString);
+
+
+	config[4] = 7;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQXBBDAC", testString);
+
+
+	config[5] = 5;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQXKBDAC", testString);
+
+
+	config[6] = 1;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQXKCDAC", testString);
+
+	config[8] = 4;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQXKCDQC", testString);
+
+	config[9] = 7;
+	testString = wheelManager.BuildString(config);
+	EXPECT_EQ("FTKQXKCDQZ", testString);
+
+
+
+}
+
 
 
 // As told by instructions

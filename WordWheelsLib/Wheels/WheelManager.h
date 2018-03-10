@@ -24,6 +24,8 @@ public:
 	// Brute force method
 	void WheelWordsInList(const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords) const;
 	void WheelWordsInDictionary(const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
+
+	std::string BuildString(std::vector<std::size_t> configuration) const;
 protected:
 	void WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
 	Wheels::StringVec wheels;
@@ -40,6 +42,8 @@ private:
 	// Duplicate letters on a wheel have no effect on the number of outputs
 	void RemoveDuplicateLetters();
 
-	bool IsFinalConfiguration(std::vector<std::size_t> configuration);
+	bool IsFinalConfiguration(const std::vector<std::size_t>& configuration) const;
+
+	
 };
 

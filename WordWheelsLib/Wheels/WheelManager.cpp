@@ -100,23 +100,23 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx) const
 	std::vector<std::size_t> maximumIndices;
 	for (std::size_t wheelIdx = FIRST_WHEEL_IDX; wheelIdx < wheels.size(); ++wheelIdx)
 	{
-		maximumIndices.push_back(wheels[wheelIdx].length());
+		maximumIndices.push_back(wheels[wheelIdx].length() - 1);
 	}
 
-	//std::vector<std::size_t> indices = maximumIndices;
-	//std::vector<std::size_t> endIndices = maximumIndices;
-	//indices[0] = startCharIdx;
-	//
-	//while (!isFinalConfiguration(wheelConfiguration))
-	//{
-	//	//BuildString(wheelConfiguration)
-	//	//std::string wheelConfiguration;
+	std::vector<std::size_t> wheelConfiguration = maximumIndices;
+	wheelConfiguration[0] = startCharIdx;
+	
+	while (!IsFinalConfiguration(wheelConfiguration))
+	{
+		std::string configString = BuildString(wheelConfiguration);
+		NextConfiguration(wheelConfiguration, maximumIndices);
+		
 	//	//BuildString(startCharIdx, maximumIndices, wheelConfiguration);
 	//	//
 	//	// Increament Indicies
 	//	//
 	//	//WordsInDictionary(wheelConfiguration, MIN_WORD_SIZE, dictionary, matchingWords);
-	//}
+	}
 }
 
 void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, StringVec& matchingWords) const
@@ -169,7 +169,7 @@ void WheelManager::RemoveDuplicateLetters()
 }
 
 
-bool WheelManager::IsFinalConfiguration(std::vector<std::size_t> configuration)
+bool WheelManager::IsFinalConfiguration(const std::vector<std::size_t>& configuration) const
 {
 	const int FIRST_WHEEL_IDX = 0;
 	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
@@ -182,4 +182,17 @@ bool WheelManager::IsFinalConfiguration(std::vector<std::size_t> configuration)
 		}
 	}
 	return true;
+}
+
+std::string  WheelManager::BuildString(std::vector<std::size_t> configuration) const
+{
+	assert(configuration.size() == wheels.size());
+
+	std::string wheelConfiguration;
+
+	for (auto wheel = 0; wheel < wheels.size(); ++wheel)
+	{
+		wheelConfiguration.push_back(wheels[wheel][configuration[wheel]]);
+	}
+	return wheelConfiguration;
 }

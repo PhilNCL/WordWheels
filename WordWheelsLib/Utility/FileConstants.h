@@ -13,5 +13,6 @@ namespace FileConstants
 	const std::string TEST_PATH = TEXT_DIRECTORY + "TextFile.txt";
 	const std::string TEST_DICTIONARY_PATH = TEXT_DIRECTORY + "TestDictionary.txt";
 	const std::string TEST_WHEELS_PATH = TEXT_DIRECTORY + "TestWheels.txt";
+	const std::string TEST_SMALL_WHEELS_PATH = TEXT_DIRECTORY + "TestSmallWheels.txt";
 }
 
