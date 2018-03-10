@@ -59,3 +59,15 @@ TEST(Dictionary, LoadingFromFile)
 	EXPECT_EQ(words.size(), 1);
 }
 
+TEST(Dictionary, CaseInsensitive)
+{
+	Dictionary dictionary;
+	dictionary.AddWord("Koala");
+	dictionary.AddWord("Merlin");
+	dictionary.AddWord("My");
+	dictionary.AddWord("Most");
+	dictionary.AddWord("Melodic");
+	dictionary.AddWord("Asparagus");
+
+	EXPECT_TRUE(false);
+}
