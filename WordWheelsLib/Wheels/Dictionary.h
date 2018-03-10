@@ -1,4 +1,4 @@
-// Case sensitive i.e. dinosaur and Dinosaur are considered distinct
+// Case insensitive i.e. dinosaur and Dinosaur are considered distinct. All words capitalized
 #pragma once
 
 #include <map>

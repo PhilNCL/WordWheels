@@ -32,11 +32,11 @@ void Dictionary::AddWord(const std::string& word)
 	{
 		return;
 	}
-	std::string keyWord = word;
-	std::transform(word.begin(), word.end(), keyWord.begin(), ::tolower);
+	std::string keyWord = word.substr(0, MIN_WORD_SIZE);
+	std::transform(keyWord.begin(), keyWord.end(), keyWord.begin(), ::tolower);
 	
-	auto& wordList = dictionary[keyWord.substr(0, MIN_WORD_SIZE)];
-	wordList.push_back(keyWord);
+	auto& wordList = dictionary[keyWord];
+	wordList.push_back(word);
 	if (doWordSorting)
 	{
 		std::sort(wordList.begin(), wordList.end());
@@ -60,7 +60,13 @@ bool Dictionary::GetWords(const std::string& firstLetters, std::vector<std::stri
 	}
 	else
 	{
-		wordList = potentialWordList->second;
+		for (auto& word : potentialWordList->second)
+		{
+			std::string upperCase = word;
+			std::transform(word.begin(), word.end(), upperCase.begin(), ::toupper);
+			wordList.push_back(upperCase);
+		}
+
 		return true;
 	}
 }

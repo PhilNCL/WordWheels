@@ -8,14 +8,25 @@ bool ReverseStringCompare(const std::string& left, const std::string& right)
 	return std::equal(left.rbegin(), left.rend(), right.rbegin());
 }
 
-void FindSubstringsFromList(const std::string& word, const std::vector<std::string>& potentialWords, std::vector<std::string>& matchingStrings)
+void FindSubstringsFromList(const std::string& string, const std::vector<std::string>& potentialWords, std::vector<std::string>& matchingStrings)
 {
 	for (auto& str : potentialWords)
 	{
-		if (word.find(str) != std::string::npos)
+		if (IsSubstringInString(string, str))
 		{
 			matchingStrings.push_back(str);
 		}
 	}
 }
 
+bool IsSubstringInString(const std::string& string, const std::string& substring)
+{
+	if (string.find(substring) != std::string::npos)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

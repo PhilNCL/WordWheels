@@ -103,22 +103,22 @@ TEST(WheelManager, FindDictionaryInWheels)
 	wheelManager.WheelWordsInDictionary(&dictionary, foundWords);
 	EXPECT_EQ(foundWords.size(), 4);
 
-	auto iter = std::find(foundWords.begin(), foundWords.end(), "all");
+	auto iter = std::find(foundWords.begin(), foundWords.end(), "ALL");
 	EXPECT_TRUE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "abort");
+	iter = std::find(foundWords.begin(), foundWords.end(), "ABORT");
 	EXPECT_TRUE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "brian");
+	iter = std::find(foundWords.begin(), foundWords.end(), "BRIAN");
 	EXPECT_TRUE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "and");
+	iter = std::find(foundWords.begin(), foundWords.end(), "AND");
 	EXPECT_TRUE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "asteroid");
+	iter = std::find(foundWords.begin(), foundWords.end(), "ASTEROID");
 	EXPECT_FALSE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "am");
+	iter = std::find(foundWords.begin(), foundWords.end(), "AM");
 	EXPECT_FALSE(iter != foundWords.end());
 }
 

@@ -23,14 +23,14 @@ TEST(Dictionary, AddingWords)
 	std::vector<std::string> words;
 	dictionary.GetWords("My", words);
 	EXPECT_EQ(words.size(), 1);
-	EXPECT_EQ(words.at(0), "My");
+	EXPECT_EQ(words.at(0), "MY");
 	
 	words.clear();
 	dictionary.GetWords("Me", words);
 	EXPECT_EQ(words.size(), 3);
-	EXPECT_EQ(words.at(0), "Melodic");
-	EXPECT_EQ(words.at(1), "Merlin");
-	EXPECT_EQ(words.at(2), "Message");
+	EXPECT_EQ(words.at(0), "MELODIC");
+	EXPECT_EQ(words.at(1), "MERLIN");
+	EXPECT_EQ(words.at(2), "MESSAGE");
 
 	words.clear();
 	dictionary.GetWords("As", words);
@@ -63,11 +63,76 @@ TEST(Dictionary, CaseInsensitive)
 {
 	Dictionary dictionary;
 	dictionary.AddWord("Koala");
-	dictionary.AddWord("Merlin");
-	dictionary.AddWord("My");
-	dictionary.AddWord("Most");
-	dictionary.AddWord("Melodic");
-	dictionary.AddWord("Asparagus");
+	dictionary.AddWord("giraffe");
+	dictionary.AddWord("tUrkey");
+	dictionary.AddWord("aaRDVARK");
+	dictionary.AddWord("pAnDa");
 
-	EXPECT_TRUE(false);
+	std::vector<std::string> words;
+
+	dictionary.GetWords("Ko", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("kO", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("ko", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("KO", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+	dictionary.GetWords("Gi", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("gI", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("GI", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("gi", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+
+	dictionary.GetWords("Tu", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("tU", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("TU", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("tu", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+	dictionary.GetWords("Aa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("aA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("AA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("aa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+
+	dictionary.GetWords("Pa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("pA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("PA", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
+	dictionary.GetWords("pa", words);
+	EXPECT_EQ(words.size(), 1);
+	words.clear();
 }

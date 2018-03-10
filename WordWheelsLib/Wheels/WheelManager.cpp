@@ -94,7 +94,7 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vec
 		{
 			std::vector<std::string> potentialWords;
 			dictionary->GetWords(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
-			FindSubstringsFromList(wheel, potentialWords, matchingWords);
+			FindSubstringsFromList(wheel.substr(startChar), potentialWords, matchingWords);
 		}
 	}
 }

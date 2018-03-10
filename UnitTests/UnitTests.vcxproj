@@ -23,6 +23,7 @@
     <ClCompile Include="FileManagerTests.cpp" />
     <ClCompile Include="googletest\src\gtest-all.cc" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="UtilityTests.cpp" />
     <ClCompile Include="WheelManagerTests.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
