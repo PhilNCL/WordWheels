@@ -27,7 +27,6 @@ public:
 
 	std::string BuildString(std::vector<std::size_t> configuration) const;
 protected:
-	void WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
 	Wheels::StringVec wheels;
 	
 	const int MIN_WORD_SIZE;
@@ -38,12 +37,10 @@ private:
 	void InitaliseWheels(std::size_t numWheels, std::size_t lettersPerWheel);
 	void ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel);
 
-	void CheckWheelCombinations(std::size_t startCharIdx) const;
+	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
 	// Duplicate letters on a wheel have no effect on the number of outputs
 	void RemoveDuplicateLetters();
 
 	bool IsFinalConfiguration(const std::vector<std::size_t>& configuration) const;
-
-	
 };
 

@@ -21,8 +21,15 @@ void MakeUpperCase(const std::string& originalString, std::string& upperCaseStri
 // Alphabetical order, does no case check
 void MakeStringUnique(std::string& sameCaseString);
 
-void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);
+
 
 
 // Non string utility functions***************
 void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration);
+void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, int& indexChanged);
+
+
+// Wheel Functions???
+void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);
+
+void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, int minWordSize);

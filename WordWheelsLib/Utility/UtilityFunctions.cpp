@@ -4,8 +4,9 @@
 #include <cassert>
 #include <set>
 
+//TODO: Wronge place for this
 #include "../Wheels/Dictionary.h"
-
+#include <string>
 using namespace Wheels;
 
 
@@ -60,7 +61,7 @@ void  WordsInDictionary(const std::string& string, std::size_t minWordSize, cons
 {
 	std::size_t endChar = string.length() - minWordSize;
 
-	for (std::size_t startChar = 0; startChar < endChar; ++startChar)
+	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
 	{
 		StringVec potentialWords;
 		dictionary->GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
@@ -87,3 +88,37 @@ void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std
 		}
 	}
 }
+
+void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, int& indexChanged)
+{
+	assert(currentConfiguration.size() == initialConfiguration.size());
+
+	for (int index = currentConfiguration.size() - 1; index != 0; --index)
+	{
+		if (currentConfiguration[index])
+		{
+			--currentConfiguration[index];
+			indexChanged = index;
+			while (index != currentConfiguration.size() - 1)
+			{
+				++index;
+				currentConfiguration[index] = initialConfiguration[index];
+			}
+			break;
+		}
+	}
+}
+
+void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector<Wheels::StringVec>& targetDictionary, int minWordSize)
+{
+	std::size_t endChar = sourceString.length() - minWordSize;
+
+	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
+	{
+		StringVec potentialWords;
+		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), potentialWords);
+		targetDictionary.push_back(potentialWords);
+	}
+}
+
+

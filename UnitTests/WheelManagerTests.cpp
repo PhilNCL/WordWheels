@@ -107,11 +107,17 @@ TEST(WheelManager, FindDictionaryInWheels)
 	iter = std::find(foundWords.begin(), foundWords.end(), "AND");
 	EXPECT_TRUE(iter != foundWords.end());
 
+	iter = std::find(foundWords.begin(), foundWords.end(), "AM");
+	EXPECT_TRUE(iter != foundWords.end());
+
 	iter = std::find(foundWords.begin(), foundWords.end(), "ASTEROID");
 	EXPECT_FALSE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "AM");
+
+	iter = std::find(foundWords.begin(), foundWords.end(), "ABBA");
 	EXPECT_FALSE(iter != foundWords.end());
+
+
 }
 
 TEST(WheelManager, BuildString)
@@ -160,9 +166,6 @@ TEST(WheelManager, BuildString)
 	config[9] = 7;
 	testString = wheelManager.BuildString(config);
 	EXPECT_EQ("FTKQXKCDQZ", testString);
-
-
-
 }
 
 

@@ -35,6 +35,7 @@ system("Pause")
 8) Utility and Utility String
 9) IsFinalConfig into utility
 10) Reduce magic numbers in tests
-
+11) Horrible names e.g. WordsInDictionary
+12) Consider what happens e.g. UnitTest for GenerateDictionary AN AN appears twice.
 Checks:
 1) All functions have capital letter

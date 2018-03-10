@@ -2,6 +2,10 @@
 #include <gtest\gtest.h>
 
 #include <Utility\UtilityFunctions.h>
+#include <Utility\FileConstants.h> \\TEST_DICTIONARY_PATH
+#include <Wheels\Dictionary.h> \\TODO: Move
+#include <vector>
+using namespace FileConstants;
 
 TEST(UtilityString, IsSubstringInString)
 {
@@ -139,4 +143,34 @@ TEST(Utility, NextConfiguration)
 	EXPECT_EQ(indices[3], 3);
 	EXPECT_EQ(indices[4], 8);
 	EXPECT_EQ(indices[5], 8);
+}
+
+
+TEST(Utility, GenerateDictionary)
+{
+	Dictionary dictionary(TEST_DICTIONARY_PATH);
+	const std::string sourceString = "ANDOKBRIANABTIRED";
+	std::vector<std::vector<std::string>> targetDictionary;
+
+	GenerateDictionary(sourceString, &dictionary, targetDictionary, 2);
+	
+	const int EXPECTED_SIZES[] = { 1, 0 , 0 , 0, 0, 1, 0, 0 , 1, 0, 4, 0, 0, 0, 0, 0, 0 };
+	for (int i = 0; i < sourceString.size() - 2; ++i)
+	{
+		EXPECT_EQ(targetDictionary[i].size(), EXPECTED_SIZES[i]);
+	}
+
+
+	auto iter = std::find(targetDictionary[0].begin(), targetDictionary[0].end(), "AND");
+	EXPECT_TRUE(iter != targetDictionary[0].end());
+
+	iter = std::find(targetDictionary[10].begin(), targetDictionary[10].end(), "ABBA");
+	EXPECT_TRUE(iter != targetDictionary[10].end());
+
+	iter = std::find(targetDictionary[10].begin(), targetDictionary[10].end(), "ABORT");
+	EXPECT_TRUE(iter != targetDictionary[10].end());
+
+	iter = std::find(targetDictionary[10].begin(), targetDictionary[10].end(), "ABACUS");
+	EXPECT_TRUE(iter != targetDictionary[10].end());
+
 }

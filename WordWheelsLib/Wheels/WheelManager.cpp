@@ -77,7 +77,7 @@ void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& 
 	}
 }
 
-
+#include<iostream>
 
 void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
 {
@@ -85,13 +85,12 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 	// TODO: What if wheels is empty???
 	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
-		StringVec potentialWords;
-		CheckWheelCombinations(startCharIdx);
+		CheckWheelCombinations(startCharIdx, dictionary, matchingWords);
 	}
 }
 
 // Requires valid input
-void WheelManager::CheckWheelCombinations(std::size_t startCharIdx) const
+void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary, StringVec& matchingWords) const
 {
 	const int FIRST_WHEEL_IDX = 0;
 	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
@@ -109,20 +108,11 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx) const
 	while (!IsFinalConfiguration(wheelConfiguration))
 	{
 		std::string configString = BuildString(wheelConfiguration);
+		WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
 		NextConfiguration(wheelConfiguration, maximumIndices);
-		
-	//	//BuildString(startCharIdx, maximumIndices, wheelConfiguration);
-	//	//
-	//	// Increament Indicies
-	//	//
-	//	//WordsInDictionary(wheelConfiguration, MIN_WORD_SIZE, dictionary, matchingWords);
 	}
 }
 
-void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, StringVec& matchingWords) const
-{
-
-}
 
 void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const
 {
@@ -196,3 +186,11 @@ std::string  WheelManager::BuildString(std::vector<std::size_t> configuration) c
 	}
 	return wheelConfiguration;
 }
+
+/*
+ANRT
+ELNOT
+CHMTI
+CEJOS
+0444
+*/
