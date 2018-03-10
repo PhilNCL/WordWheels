@@ -39,5 +39,7 @@ private:
 	void CheckWheelCombinations(std::size_t startCharIdx) const;
 	// Duplicate letters on a wheel have no effect on the number of outputs
 	void RemoveDuplicateLetters();
+
+	bool IsFinalConfiguration(std::vector<std::size_t> configuration);
 };
 

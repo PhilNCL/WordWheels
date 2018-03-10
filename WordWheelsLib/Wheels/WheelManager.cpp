@@ -103,20 +103,20 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx) const
 		maximumIndices.push_back(wheels[wheelIdx].length());
 	}
 
-	std::vector<std::size_t> indices = maximumIndices;
-	std::vector<std::size_t> endIndices = maximumIndices;
-	indices[0] = startCharIdx;
-
-//	while (!isFinalConfiguration(indices))
+	//std::vector<std::size_t> indices = maximumIndices;
+	//std::vector<std::size_t> endIndices = maximumIndices;
+	//indices[0] = startCharIdx;
+	//
+	//while (!isFinalConfiguration(wheelConfiguration))
 	//{
-		// Build String
-	//	std::string wheelConfiguration;
-		//BuildString(startCharIdx, maximumIndices, wheelConfiguration);
-
-		// Increament Indicies
-
-		//WordsInDictionary(wheelConfiguration, MIN_WORD_SIZE, dictionary, matchingWords);
-//	}
+	//	//BuildString(wheelConfiguration)
+	//	//std::string wheelConfiguration;
+	//	//BuildString(startCharIdx, maximumIndices, wheelConfiguration);
+	//	//
+	//	// Increament Indicies
+	//	//
+	//	//WordsInDictionary(wheelConfiguration, MIN_WORD_SIZE, dictionary, matchingWords);
+	//}
 }
 
 void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, StringVec& matchingWords) const
@@ -166,4 +166,20 @@ void WheelManager::RemoveDuplicateLetters()
 	{
 		MakeStringUnique(wheel);
 	}
+}
+
+
+bool WheelManager::IsFinalConfiguration(std::vector<std::size_t> configuration)
+{
+	const int FIRST_WHEEL_IDX = 0;
+	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
+
+	for (int idx = SECOND_WHEEL_IDX; idx < wheels.size(); ++idx)
+	{
+		if (configuration[idx])
+		{
+			return false;
+		}
+	}
+	return true;
 }

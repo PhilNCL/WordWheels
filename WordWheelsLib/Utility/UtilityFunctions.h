@@ -25,4 +25,4 @@ void  WordsInDictionary(const std::string& string, std::size_t minWordSize, cons
 
 
 // Non string utility functions***************
-void DecrementIndices(std::vector<std::size_t>& indices);
+void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration);

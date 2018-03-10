@@ -68,13 +68,21 @@ void  WordsInDictionary(const std::string& string, std::size_t minWordSize, cons
 	}
 }
 
-void DecrementIndices(std::vector<std::size_t>& indices)
+
+void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration)
 {
-	for (auto index = indices.rbegin(); index != indices.rend(); ++index)
+	assert(currentConfiguration.size() == initialConfiguration.size());
+
+	for (int index = currentConfiguration.size() - 1; index != 0; --index)
 	{
-		if (*index)
+		if (currentConfiguration[index])
 		{
-			--(*index);
+			--currentConfiguration[index];
+			while (index != currentConfiguration.size() - 1)
+			{
+				++index;
+				currentConfiguration[index] = initialConfiguration[index];
+			}
 			break;
 		}
 	}
