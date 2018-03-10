@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Utility\CommonTypes.h" />
     <ClInclude Include="Utility\UtilityFunctions.h" />
     <ClInclude Include="Wheels\Dictionary.h" />
     <ClInclude Include="Utility\FileConstants.h" />

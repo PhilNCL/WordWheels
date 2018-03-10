@@ -8,14 +8,16 @@
 #include "../Utility/FileManager.h"
 #include "../Utility/UtilityFunctions.h"
 
-Dictionary::Dictionary(int maxValidWordSize, int minValidWordSize) :
+using namespace Wheels;
+
+Dictionary::Dictionary(std::size_t maxValidWordSize, std::size_t minValidWordSize) :
 	MIN_WORD_SIZE(minValidWordSize), MAX_WORD_SIZE(maxValidWordSize)
 {
 	assert(minValidWordSize > 0);
 	assert(maxValidWordSize > 0);
 }
 
-Dictionary::Dictionary(const std::string& filepath, int maxValidWordSize, int minValidWordSize) :
+Dictionary::Dictionary(const std::string& filepath, std::size_t maxValidWordSize, std::size_t minValidWordSize) :
 	Dictionary(maxValidWordSize, minValidWordSize)
 {
 	LoadWordsFromFile(filepath);
@@ -63,7 +65,7 @@ void Dictionary::LoadWords(std::stringstream& dicFile)
 	}
 }
 
-void Dictionary::GetWordsFromKey(const std::string& key, std::vector<std::string> & keyWords) const
+void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) const
 {
 	if (!isValidKey(key))
 	{

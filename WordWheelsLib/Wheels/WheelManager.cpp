@@ -12,13 +12,14 @@
 
 // Declarations
 using std::ifstream;
+using namespace Wheels;
 
-WheelManager::WheelManager(int minWordSize) :
+WheelManager::WheelManager(std::size_t minWordSize) :
 MIN_WORD_SIZE(minWordSize)
 {
 }
 
-WheelManager::WheelManager(const std::string& filepath, int minWordSize) :
+WheelManager::WheelManager(const std::string& filepath, std::size_t minWordSize) :
 	WheelManager(minWordSize)
 {
 	LoadWheelsFromFile(filepath);
@@ -35,8 +36,8 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 
 	if (fileManager.LoadFile(filepath, wheelFile))
 	{
-		int numWheels;
-		int lettersPerWheel;
+		std::size_t numWheels;
+		std::size_t lettersPerWheel;
 
 		ReadHeader(wheelFile, numWheels, lettersPerWheel);
 		ReadWheels(wheelFile, numWheels, lettersPerWheel);
@@ -54,7 +55,7 @@ std::size_t WheelManager::GetNumWheels() const
 	return wheels.size();
 }
 
-std::string WheelManager::GetWheel(std::size_t idx)
+std::string WheelManager::GetWheel(std::size_t idx) const
 {
 	if (idx < 0 || idx >= wheels.size())
 	{
@@ -66,17 +67,16 @@ std::string WheelManager::GetWheel(std::size_t idx)
 	}
 }
 
-void WheelManager::WheelWordsInList(const std::vector<std::string>& potentialWords, std::vector<std::string>& matchingWords)
+void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& matchingWords) const
 {
 	for (auto& wheel : wheels)
 	{
 		FindSubstringsFromList(wheel, potentialWords, matchingWords);
 	}
-	
 }
 
 
-void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vector<std::string>& matchingWords)
+void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
 {
 	for (auto& wheel : wheels)
 	{
@@ -84,25 +84,25 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, std::vec
 	}
 }
 
-void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, std::vector<std::string>& matchingWords)
+void  WheelManager::WordsInDictionary(const std::string& wheel, const Dictionary* dictionary, StringVec& matchingWords) const
 {
 	std::size_t endChar = wheel.length() - MIN_WORD_SIZE;
 
 	for (std::size_t startChar = 0; startChar < endChar; ++startChar)
 	{
-		std::vector<std::string> potentialWords;
+		StringVec potentialWords;
 		dictionary->GetWordsFromKey(wheel.substr(startChar, MIN_WORD_SIZE), potentialWords);
 		FindSubstringsFromList(wheel.substr(startChar), potentialWords, matchingWords);
 	}
 }
 
-void WheelManager::ReadHeader(std::stringstream & wheelFile, int & numWheels, int & lettersPerWheel)
+void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const
 {
 	wheelFile >> numWheels;
 	wheelFile >> lettersPerWheel;
 }
 
-void  WheelManager::ReadWheels(std::stringstream& wheelFile, int numWheels, int lettersPerWheel)
+void  WheelManager::ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel)
 {
 	std::string wheel;
 	while (wheelFile >> wheel)

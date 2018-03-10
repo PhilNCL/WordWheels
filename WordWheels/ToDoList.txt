@@ -4,9 +4,7 @@ Remove system("pause") & #include <stdlib.h>
 Error checks for inFile in WheelManager
 Do a const check
 Order of methods
-Don't add words to the dictionary which are larger than M?
-Typedef dictionary #
-Change int to std::size_t
+
 Low Priority:
 Wheel Manager/Dictionary: Loading Multiple Files
 LoadWheelsFromFile Make bool
@@ -21,3 +19,5 @@ system("Pause")
 Asserts on loading file not good
 
 // Dead ends -> Sorting words, dictionary by key and length
+
+// Don't add words to the dictionary which are larger than M

@@ -6,6 +6,7 @@
     <ClInclude Include="Wheels\WheelManager.h" />
     <ClInclude Include="Wheels\Dictionary.h" />
     <ClInclude Include="Utility\UtilityFunctions.h" />
+    <ClInclude Include="Utility\CommonTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utility\FileManager.cpp" />
