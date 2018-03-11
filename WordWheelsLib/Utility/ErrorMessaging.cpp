@@ -1,14 +1,25 @@
+// Filename:	ErrorMessaging.h
+// Description: Definitions for ErrorMessaging functions
+// Author:		Philip Jones
+// Date:		12/03/18
+// Notes:	
+
 #include "ErrorMessaging.h"
 
-#include <iostream>
+// Standard Includes
+#include <iostream>		//std::cin
+
+// Namespaces
 using namespace Errors;
 
+// Pauses program until user presses a key when it exits with error code
 void Abort(Error  errorType)
 {
 	std::cin.get();
 	exit(errorType);
 }
 
+// Prints error message to user based on errorType
 void HandleError(Error  errorType, const std::string& extraInfo)
 {
 	switch (errorType)

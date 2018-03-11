@@ -6,6 +6,7 @@
 // Notes:
 
 // Standard Includes
+#include <ostream>		// std::ostream
 #include <string>		// std::string
 #include <vector>		// std::vector
 
@@ -39,3 +40,5 @@ void GenerateNewSubstrings(const std::string& string, std::size_t index,
 				 std::size_t lowestChangedIndex, std::size_t minWordSize, 
 				std::vector<std::vector<std::string>>& strings);
 
+// Prints all strings in stringVec via the outputstream os
+void PrintStrings(std::ostream& os, const Wheels::StringVec& stringVec);

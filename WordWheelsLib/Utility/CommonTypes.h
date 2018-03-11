@@ -6,10 +6,10 @@
 // Notes:		
 
 // Standard Includes
-#include <map>
-#include <set>
-#include <string>
-#include <vector>
+#include <map>			// std::map
+#include <set>			// std::set
+#include <string>		// std::string
+#include <vector>		// std::vector
 
 namespace Wheels
 {
