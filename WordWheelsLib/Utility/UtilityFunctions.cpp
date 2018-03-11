@@ -57,17 +57,18 @@ void MakeStringUnique(std::string& upperCaseString)
 	upperCaseString.erase(lastChar, upperCaseString.end());
 }
 
-void BreakString(const std::string& string, std::size_t chopIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings)
+void BreakString(const std::string& string, std::size_t chopIndex, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings)
 {
 	assert(chopIndex > 0 && chopIndex < string.length());
 
-	for (std::size_t startIdx = 0; startIdx <= chopIndex; ++startIdx)
+	for (std::size_t startIdx = 0; startIdx <= lowestChangedIndex; ++startIdx)
 	{
 		for (std::size_t endIdx = chopIndex; endIdx < string.length(); ++endIdx)
 		{
 			std::size_t length = endIdx + 1 - startIdx;
 			if (length >= minWordSize)
 			{
+				//TODO: If pass uninitialised strings startIdx will crash
 				strings[startIdx].push_back(string.substr(startIdx, length));
 			}
 
@@ -152,20 +153,20 @@ void RefreshDictionary(const std::string& sourceString, std::vector <StringVec>&
 	}
 
 }
-
-
-void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords)
+#include <iostream>
+void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector <Wheels::StringVec>& potentialWords, Wheels::StringVec& matchingWords)
 {
 	// Refactor
-	//for (const auto& word : potentialWords)
-	//{
-	//	for (std::size_t idx = 0; idx < currentDictionary.size(); ++idx)
-	//	{
-	//		if (std::find(currentDictionary[idx].find(word) != currentDictionary[idx].end())
-	//		{
-	//			matchingWords.push_back(word);
-	//		}
-	//	}
+	assert(currentDictionary.size() == potentialWords.size());
 
-	//}
+	for (std::size_t idx = 0; idx < currentDictionary.size(); ++idx)
+	{
+		for (auto& word : potentialWords[idx])
+		{
+			if (std::find(currentDictionary[idx].begin(), currentDictionary[idx].end(), word) != currentDictionary[idx].end())
+			{
+				matchingWords.push_back(word);
+			}
+		}
+	}
 }

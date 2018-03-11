@@ -113,14 +113,20 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	configString = BuildString(wheelConfiguration);
 	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
 	// Refresh Pass
+	std::size_t lowestChangedIndex = configString.size() - 1;
 	while (!IsFinalConfiguration(wheelConfiguration))
 	{
+		
 		std::size_t chopIndex;
-		std::vector<StringVec> potentialWords;
+		std::vector<StringVec> potentialWords(configString.size() - 1); //TODO: - 1 with MIN_WORDS?
 		NextConfiguration(wheelConfiguration, maximumIndices, chopIndex);
+		if (chopIndex < lowestChangedIndex)
+		{
+			lowestChangedIndex = chopIndex;
+		}
 		configString = BuildString(wheelConfiguration);
 		RefreshDictionary(configString, targetDictionary, dictionary, chopIndex, MIN_WORD_SIZE);
-		BreakString(configString, chopIndex, MIN_WORD_SIZE, potentialWords);
+		BreakString(configString, chopIndex, lowestChangedIndex, MIN_WORD_SIZE, potentialWords);
 		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
 	}
 }

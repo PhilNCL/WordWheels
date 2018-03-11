@@ -38,5 +38,8 @@ system("Pause")
 11) Horrible names e.g. WordsInDictionary
 12) Consider what happens e.g. UnitTest for GenerateDictionary AN AN appears twice.
 13) int -> size_t
+14) TODO. Size
+15) Can cull dictionary based on index i.e. 5 letters idx is 3 don't add 10 letter word
+16) Lowest changed index into class
 Checks:
 1) All functions have capital letter
