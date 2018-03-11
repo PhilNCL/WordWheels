@@ -53,7 +53,7 @@ WheelManager::~WheelManager()
 {
 }
 
-void WheelManager::LoadWheelsFromFile(const std::string& filepath)
+bool WheelManager::LoadWheelsFromFile(const std::string& filepath)
 {
 	FileManager fileManager;
 	std::stringstream wheelFile;
@@ -67,10 +67,13 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 		ReadWheels(wheelFile, numWheels, lettersPerWheel);
 
 		RemoveDuplicateLetters();
+
+		return true;
 	}
 	else
 	{
 		HandleError(Errors::FILE_LOAD_FAILED, filepath);
+		return false;
 	}
 
 }
@@ -93,7 +96,7 @@ std::string WheelManager::GetWheel(std::size_t idx) const
 	}
 }
 
-void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary) 
+void WheelManager::WheelWordsInDictionary(const Dictionary& dictionary) 
 {
 	if (wheels.empty())
 	{
@@ -112,7 +115,7 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary)
 }
 
 
-void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary)
+void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary& dictionary)
 {
 	ConfigurationManager configuration(GetMaxWheelIndices(), startCharIdx);
 
@@ -124,7 +127,7 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	CheckAllConfigurations(configuration, dictionary);
 }
 
-void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary) 
+void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary& dictionary) 
 {
 	std::vector<std::vector<std::string>> targetDictionary;
 	std::string configString = BuildString(configuration.GetCurrentConfig());
@@ -240,14 +243,14 @@ void  WheelManager::MatchingWordsInDictionary(std::vector <StringVec>& currentDi
 	}
 }
 
-void  WheelManager::WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary)
+void  WheelManager::WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary& dictionary)
 {
 	std::size_t endChar = string.length() - minWordSize;
 	StringVec foundWords;
 	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
 	{
 		StringVec potentialWords;
-		dictionary->GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
+		dictionary.GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
 		FindSubstringsFromList(string.substr(startChar), potentialWords, foundWords);
 	}
 

@@ -22,22 +22,26 @@ class WheelManager
 {
 	static const int FIRST_WHEEL_IDX = 0;
 public: // Constructors
+	// Create an empty WheelManager
 	WheelManager(std::size_t minWordSize = 2);
+
+	// Create a WheelManager and populate it with wheels from file at filepath
 	WheelManager(const std::string& filepath, std::size_t minWordSize = 2);
+
 	~WheelManager();
 
-
-
-
-	void LoadWheelsFromFile(const std::string& filepath);
+public: // Interface
+	// Load wheels from file at filepath
+	bool LoadWheelsFromFile(const std::string& filepath);
 	
 	std::size_t GetNumWheels() const;
+
+	// Get the wheel at index idx. Performs sanity check on idx.
 	std::string GetWheel(std::size_t idx) const;
 
-	// Brute force method
-	//void WheelWordsInList(const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords) const;
-	void WheelWordsInDictionary(const Dictionary* dictionary);
-	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary);
+
+	void WheelWordsInDictionary(const Dictionary& dictionary);
+	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary& dictionary);
 
 	inline const Wheels::StringVec& GetFoundWords() { return matchingWords; }
 	// Thread safe push back for all matching words found
@@ -53,7 +57,7 @@ private:
 	void ReadHeader(std::stringstream& wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const;
 	void ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel);
 
-	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary);
+	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary& dictionary);
 	// Duplicate letters on a wheel have no effect on the number of outputs
 	void RemoveDuplicateLetters();
 
@@ -67,6 +71,6 @@ private:
 	Wheels::StringVec matchingWords;
 
 	void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector<Wheels::StringVec>& potentialWords);
-	void WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary);
+	void WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary& dictionary);
 };
 

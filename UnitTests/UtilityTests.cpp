@@ -89,7 +89,7 @@ TEST(Utility, GenerateDictionary)
 	const std::string sourceString = "ANDOKBRIANABTIRED";
 	std::vector<std::vector<std::string>> targetDictionary;
 
-	GenerateDictionary(sourceString, &dictionary, targetDictionary, 2);
+	GenerateDictionary(sourceString, dictionary, targetDictionary, 2);
 	
 	const int EXPECTED_SIZES[] = { 1, 0 , 0 , 0, 0, 1, 0, 0 , 1, 0, 4, 0, 0, 0, 0, 0, 0 };
 	for (int i = 0; i < sourceString.size() - 2; ++i)
@@ -213,12 +213,12 @@ TEST(Utility, RefreshDictionary)
 	Dictionary dictionary(TEST_DICTIONARY_PATH);
 	std::string sourceString = "ABRIDGE";
 	std::vector<std::vector<std::string>> targetDictionary;
-	GenerateDictionary(sourceString, &dictionary, targetDictionary, 2);
+	GenerateDictionary(sourceString, dictionary, targetDictionary, 2);
 	EXPECT_EQ(targetDictionary[0].size(), 4);
 	EXPECT_EQ(targetDictionary[1].size(), 1);
 
 	sourceString[1] = 'S';
-	UpdateDictionary(sourceString, targetDictionary, &dictionary, 1, 2);
+	UpdateDictionary(sourceString, targetDictionary, dictionary, 1, 2);
 	EXPECT_EQ(targetDictionary[0].size(), 0);
 	EXPECT_EQ(targetDictionary[1].size(), 0);
 }

@@ -11,5 +11,5 @@
 class Dictionary;
 
 // Non string utility functions**************
-void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, std::size_t minWordSize);
-void UpdateDictionary(const std::string& sourceString, std::vector <Wheels::StringVec>& currentDictionary, const Dictionary* sourceDictionary, std::size_t index, std::size_t minWordSize);
+void GenerateDictionary(const std::string& sourceString, const Dictionary& sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, std::size_t minWordSize);
+void UpdateDictionary(const std::string& sourceString, std::vector <Wheels::StringVec>& currentDictionary, const Dictionary& sourceDictionary, std::size_t index, std::size_t minWordSize);
