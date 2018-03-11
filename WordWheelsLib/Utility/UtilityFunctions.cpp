@@ -84,18 +84,6 @@ void BreakString(const std::string& string, std::size_t chopIndex, std::size_t l
 	}
 }
 
-void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, StringVec& matchingWords)
-{
-
-	std::size_t endChar = string.length() - minWordSize;
-
-	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
-	{
-		StringVec potentialWords;
-		dictionary->GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
-		FindSubstringsFromList(string.substr(startChar), potentialWords, matchingWords);
-	}
-}
 
 
 void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector<StringVec>& targetDictionary, std::size_t minWordSize)
@@ -121,21 +109,4 @@ void RefreshDictionary(const std::string& sourceString, std::vector <StringVec>&
 		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), currentDictionary[startChar], sourceString.size() - startChar);
 	}
 
-}
-
-void MatchingWordsInDictionary(std::vector <StringVec>& currentDictionary, std::vector <StringVec>& potentialWords, StringVec& matchingWords)
-{
-	// Refactor
-	assert(currentDictionary.size() == potentialWords.size());
-
-	for (std::size_t idx = 0; idx < currentDictionary.size(); ++idx)
-	{
-		for (auto& word : potentialWords[idx])
-		{
-			if (std::find(currentDictionary[idx].begin(), currentDictionary[idx].end(), word) != currentDictionary[idx].end())
-			{
-				matchingWords.push_back(word);
-			}
-		}
-	}
 }

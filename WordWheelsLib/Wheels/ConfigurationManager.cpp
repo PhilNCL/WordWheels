@@ -5,7 +5,6 @@
 // Notes:		
 #include "ConfigurationManager.h"
 
-#include <iostream>
 
 ConfigurationManager::ConfigurationManager(const std::vector<std::size_t>& initialConfig, std::size_t firstIndex) :
 	currentConfiguration(initialConfig), initialConfiguration(initialConfig)
@@ -62,11 +61,12 @@ void ConfigurationManager::NextConfiguration()
 	UpdateLowestChangedIndex();
 }
 
+#include <iostream>
 void ConfigurationManager::UpdateLowestChangedIndex()
 {
 	if (lastChangedIndex < lowestChangedIndex)
 	{
 		lowestChangedIndex = lastChangedIndex;
-		std::cout << lowestChangedIndex << std::endl;
+		std::cout << lastChangedIndex << std::endl;
 	}
 }

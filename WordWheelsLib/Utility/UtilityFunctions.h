@@ -35,11 +35,5 @@ void BreakString(const std::string& string, std::size_t index, std::size_t lowes
 
 
 // Non string utility functions**************
-
-// Wheel Functions???
-void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);
-
 void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, std::size_t minWordSize);
 void RefreshDictionary(const std::string& sourceString, std::vector <Wheels::StringVec>& currentDictionary, const Dictionary* sourceDictionary, std::size_t index, std::size_t minWordSize);
-
-void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector <Wheels::StringVec>& potentialWords, Wheels::StringVec& matchingWords);

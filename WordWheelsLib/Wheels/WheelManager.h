@@ -1,12 +1,15 @@
 #pragma once
 // Filename:	WheelManager.h
-// Description: 
+// Description: Stores wheels and allows searching in a  
 // Author:		Philip Jones
 // Date:		11/03/18
 // Notes:		Employs simple threading, running one thread for each starting character on the first wheel
 
 // Standard Includes
+#include <mutex> // std::lockguard(), std::mutex
 #include <string>
+#include <vector>
+
 
 // Utilities
 #include "../Utility/CommonTypes.h" // StringVec
@@ -24,7 +27,6 @@ public: // Constructors
 	~WheelManager();
 
 
-	void AddWheel(const std::string& wheel);
 
 
 	void LoadWheelsFromFile(const std::string& filepath);
@@ -33,10 +35,13 @@ public: // Constructors
 	std::string GetWheel(std::size_t idx) const;
 
 	// Brute force method
-	void WheelWordsInList(const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords) const;
-	void WheelWordsInDictionary(const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
-	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
+	//void WheelWordsInList(const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords) const;
+	void WheelWordsInDictionary(const Dictionary* dictionary);
+	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary);
 
+	inline const Wheels::StringVec& GetFoundWords() { return matchingWords; }
+	// Thread safe push back for all matching words found
+	
 	std::string BuildString(std::vector<std::size_t> configuration) const;
 protected:
 	Wheels::StringVec wheels;
@@ -46,10 +51,9 @@ protected:
 private: 
 	// Helper functions for LoadWheelsFromFile()
 	void ReadHeader(std::stringstream& wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const;
-	void InitaliseWheels(std::size_t numWheels, std::size_t lettersPerWheel);
 	void ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel);
 
-	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
+	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary);
 	// Duplicate letters on a wheel have no effect on the number of outputs
 	void RemoveDuplicateLetters();
 
@@ -57,5 +61,12 @@ private:
 
 	// Returns a vector with an element equal to the maximum valid index of each wheel in wheels
 	std::vector<std::size_t> GetMaxWheelIndices() const;
+
+	std::mutex matchingWordMutex;
+	void AddFoundWord(std::string newWord);
+	Wheels::StringVec matchingWords;
+
+	void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector<Wheels::StringVec>& potentialWords);
+	void WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary);
 };
 

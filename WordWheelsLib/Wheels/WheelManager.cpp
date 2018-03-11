@@ -2,7 +2,19 @@
 // Description: Methods for WheelManager.h
 // Author:		Philip Jones
 // Date:		11/03/18
-// Notes:		
+// Notes:		Duplicate letters in the same wheel do not give any additional
+//				words therefore wheel size is capped to 24 (for the Roman 
+//				alphabet). 
+//				Consider 10 wheels in following configuration
+//				| A | C | T | I | V | I | S | I | O | N |
+//				if in the next configuration only the letter V changes
+//				| A | C | T | I | Q | I | S | I | O | N |
+//				then to increase efficiency the unchanged substrings (AC, ACT, ACTI, CTI, SIO, 
+//				SION, ION,...) are not searched again. Furthermore a new dictionary is not 
+//				generated. Instead words beginning with IV and VI are replaced with those beginning 
+//				IQ and QI (assuming a word size of 2). Potential dictionary words are also
+//				culled by the amount of remaining characters. In this example SING and SIT would
+//				be in the potential word list but SITUATION is not considered (as there is no wrapping)
 #include "WheelManager.h"
 
 // Standard Includes
@@ -11,11 +23,12 @@
 #include <sstream>  // std::stringstream
 #include <thread>   // std::thread
 
-// Utilities
+// Utility Includes
 #include "../Utility/FileManager.h"
 #include "../Utility/UtilityFunctions.h"
+#include "../Utility/ErrorMessaging.h"
 
-// Other Includes
+// Wheel Includes
 #include "Dictionary.h"
 #include "ConfigurationManager.h"
 
@@ -24,7 +37,7 @@ using std::ifstream;
 using namespace Wheels;
 
 WheelManager::WheelManager(std::size_t minWordSize) :
-MIN_WORD_SIZE(minWordSize)
+	MIN_WORD_SIZE(minWordSize)
 {
 }
 
@@ -49,18 +62,18 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 		std::size_t lettersPerWheel;
 
 		ReadHeader(wheelFile, numWheels, lettersPerWheel);
-		InitaliseWheels(numWheels, lettersPerWheel);
-
 		ReadWheels(wheelFile, numWheels, lettersPerWheel);
+
 		RemoveDuplicateLetters();
+	}
+	else
+	{
+		PrintError(Errors::FILE_LOAD_FAILED, filepath);
+		exit(Errors::FILE_LOAD_FAILED);
 	}
 
 }
 
-void WheelManager::AddWheel(const std::string& wheel)
-{
-	wheels.push_back(wheel);
-}
 
 std::size_t WheelManager::GetNumWheels() const
 {
@@ -79,16 +92,7 @@ std::string WheelManager::GetWheel(std::size_t idx) const
 	}
 }
 
-void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& matchingWords) const
-{
-	for (auto& wheel : wheels)
-	{
-		FindSubstringsFromList(wheel, potentialWords, matchingWords);
-	}
-}
-
-
-void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
+void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary) 
 {
 	if (wheels.empty())
 	{
@@ -97,8 +101,7 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 	std::vector<std::thread> threads;
 	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
-		//threads.push_back(std::thread(&WheelManager::CheckWheelCombinations, this, std::ref(startCharIdx), std::ref(dictionary), std::ref(matchingWords)));
-		CheckWheelCombinations(startCharIdx, dictionary, matchingWords);
+		threads.push_back(std::thread(&WheelManager::CheckWheelCombinations, this, std::ref(startCharIdx), std::ref(dictionary)));
 	}
 
 	for (auto& thread : threads) 
@@ -108,19 +111,19 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 }
 
 
-void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary, StringVec& matchingWords) const
+void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary)
 {
 	ConfigurationManager configuration(GetMaxWheelIndices(), startCharIdx);
 
 	// Initial Pass
 	std::string configString = BuildString(configuration.GetCurrentConfig());
-	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
+	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary);
 
 	//  Run Algorithm
-	CheckAllConfigurations(configuration, dictionary, matchingWords);
+	CheckAllConfigurations(configuration, dictionary);
 }
 
-void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary, StringVec& matchingWords) const
+void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary) 
 {
 	std::vector<std::vector<std::string>> targetDictionary;
 	std::string configString = BuildString(configuration.GetCurrentConfig());
@@ -132,52 +135,31 @@ void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, c
 		configuration.NextConfiguration();
 		configString = BuildString(configuration.GetCurrentConfig());
 
-
-		// Words which are on consecutive wheels
 		RefreshDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
 		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
 
-		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
-
-		// Non-consecutive wheels
-
+		MatchingWordsInDictionary(targetDictionary, potentialWords);
 	}
 }
 
 void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const
 {
-	wheelFile >> lettersPerWheel;
 	wheelFile >> numWheels;
-}
-
-void WheelManager::InitaliseWheels(std::size_t numWheels, std::size_t lettersPerWheel)
-{
-	wheels.resize(numWheels);
-	for (auto& wheel : wheels)
-	{
-		wheel.resize(lettersPerWheel);
-	}
+	wheelFile >> lettersPerWheel;
+	assert(numWheels >= MIN_WORD_SIZE);
+	assert(lettersPerWheel >= 0);
 }
 
 
 void  WheelManager::ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel)
 {
-	std::string row;
-	StringVec rows;
-	while (wheelFile >> row)
+	std::string wheel;
+	while (wheelFile >> wheel)
 	{
-		rows.push_back(row);
-		assert(row.length() == numWheels);
+		wheels.push_back(wheel);
+		assert(wheel.length() == lettersPerWheel);
 	}
-	assert(rows.size() == lettersPerWheel);
-
-	for (std::size_t charIdx = 0; charIdx < rows.size(); ++charIdx)
-	{
-		for (std::size_t wheelIdx = 0; wheelIdx < wheels.size(); ++wheelIdx)
-		{
-			wheels[wheelIdx][charIdx] = rows[charIdx][wheelIdx];
-		}
-	}
+	assert(wheels.size() == numWheels);
 }
 
 void WheelManager::RemoveDuplicateLetters()
@@ -188,7 +170,7 @@ void WheelManager::RemoveDuplicateLetters()
 	}
 }
 
-
+// In the final configuration all indices are zero (except the first wheel which is fixed for threading)
 bool WheelManager::IsFinalConfiguration(const std::vector<std::size_t>& configuration) const
 {
 	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
@@ -224,4 +206,46 @@ std::vector<std::size_t> WheelManager::GetMaxWheelIndices() const
 		maxIndices.push_back(wheels[wheelIdx].length() - 1);
 	}
 	return maxIndices;
+}
+
+
+
+void  WheelManager::MatchingWordsInDictionary(std::vector <StringVec>& currentDictionary, std::vector <StringVec>& potentialWords)
+{
+	assert(currentDictionary.size() == potentialWords.size());
+
+	for (std::size_t idx = 0; idx < currentDictionary.size(); ++idx)
+	{
+		for (auto& word : potentialWords[idx])
+		{
+			if (std::find(currentDictionary[idx].begin(), currentDictionary[idx].end(), word) != currentDictionary[idx].end())
+			{
+				AddFoundWord(word);
+			}
+		}
+	}
+}
+
+void  WheelManager::WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary)
+{
+	std::size_t endChar = string.length() - minWordSize;
+	StringVec foundWords;
+	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
+	{
+		StringVec potentialWords;
+		dictionary->GetWordsFromKey(string.substr(startChar, minWordSize), potentialWords);
+		FindSubstringsFromList(string.substr(startChar), potentialWords, foundWords);
+	}
+
+	for (auto& word : foundWords)
+	{
+		AddFoundWord(word);
+	}
+}
+
+
+void WheelManager::AddFoundWord(std::string newWord)
+{
+	std::lock_guard<std::mutex> guard(matchingWordMutex);
+	matchingWords.push_back(newWord);
 }

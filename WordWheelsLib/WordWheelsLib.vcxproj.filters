@@ -8,6 +8,7 @@
     <ClInclude Include="Utility\UtilityFunctions.h" />
     <ClInclude Include="Utility\CommonTypes.h" />
     <ClInclude Include="Wheels\ConfigurationManager.h" />
+    <ClInclude Include="Utility\ErrorMessaging.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utility\FileManager.cpp" />
@@ -15,5 +16,6 @@
     <ClCompile Include="Wheels\Dictionary.cpp" />
     <ClCompile Include="Utility\UtilityFunctions.cpp" />
     <ClCompile Include="Wheels\ConfigurationManager.cpp" />
+    <ClCompile Include="Utility\ErrorMessaging.cpp" />
   </ItemGroup>
 </Project>
