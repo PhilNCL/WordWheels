@@ -1,16 +1,24 @@
+// Filename:	WheelManager.cpp
+// Description: Methods for WheelManager.h
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:		
 #include "WheelManager.h"
 
 // Standard Includes
 #include <cassert>  // assert()
 #include <fstream>	// std::ifstream
-#include <sstream>
+#include <sstream>  // std::stringstream
 
+// Utilities
 #include "../Utility/FileManager.h"
 #include "../Utility/UtilityFunctions.h"
 
+// Other Includes
 #include "Dictionary.h"
+#include "ConfigurationManager.h"
 
-// Declarations
+// Namespace Declarations
 using std::ifstream;
 using namespace Wheels;
 
@@ -41,6 +49,7 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 
 		ReadHeader(wheelFile, numWheels, lettersPerWheel);
 		InitaliseWheels(numWheels, lettersPerWheel);
+
 		ReadWheels(wheelFile, numWheels, lettersPerWheel);
 		RemoveDuplicateLetters();
 	}
@@ -81,8 +90,11 @@ void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& 
 
 void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
 {
+	if (wheels.empty())
+	{
+		return;
+	}
 
-	// TODO: What if wheels is empty???
 	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
 		std::cout << startCharIdx + 1 << " out of " << wheels[0].length() << std::endl;
@@ -90,44 +102,27 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 	}
 }
 
-// Requires valid input
+
 void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictionary* dictionary, StringVec& matchingWords) const
 {
-	const int FIRST_WHEEL_IDX = 0;
-	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
+	ConfigurationManager configuration(GetMaxWheelIndices(), startCharIdx);
 
-	// Create Maximum Indices
-	std::vector<std::size_t> maximumIndices;
-	for (std::size_t wheelIdx = FIRST_WHEEL_IDX; wheelIdx < wheels.size(); ++wheelIdx)
-	{
-		maximumIndices.push_back(wheels[wheelIdx].length() - 1);
-	}
-
-	std::vector<std::size_t> wheelConfiguration = maximumIndices;
-	wheelConfiguration[0] = startCharIdx;
-	
 	std::vector<std::vector<std::string>> targetDictionary;
 
 	// Fist pass
-	std::string configString = BuildString(wheelConfiguration);
+	std::string configString = BuildString(configuration.GetCurrentConfig());
 	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
-	configString = BuildString(wheelConfiguration);
 	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
 	// Refresh Pass
-	std::size_t lowestChangedIndex = configString.size() - 1;
-	while (!IsFinalConfiguration(wheelConfiguration))
+
+	while (!configuration.IsFinalConfiguration())
 	{
-		std::size_t chopIndex;
 		std::vector<StringVec> potentialWords(configString.size() - 1); //TODO: - 1 with MIN_WORDS?
-		NextConfiguration(wheelConfiguration, maximumIndices, chopIndex);
-		if (chopIndex < lowestChangedIndex)
-		{
-			lowestChangedIndex = chopIndex;
-			std::cout << lowestChangedIndex <<std::endl;
-		}
-		configString = BuildString(wheelConfiguration);
-		RefreshDictionary(configString, targetDictionary, dictionary, chopIndex, MIN_WORD_SIZE);
-		BreakString(configString, chopIndex, lowestChangedIndex, MIN_WORD_SIZE, potentialWords);
+		configuration.NextConfiguration();
+
+		configString = BuildString(configuration.GetCurrentConfig());
+		RefreshDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
+		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
 		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
 	}
 }
@@ -206,10 +201,12 @@ std::string  WheelManager::BuildString(std::vector<std::size_t> configuration) c
 	return wheelConfiguration;
 }
 
-/*
-ANRT
-ELNOT
-CHMTI
-CEJOS
-0444
-*/
+std::vector<std::size_t> WheelManager::GetMaxWheelIndices() const
+{
+	std::vector<std::size_t> maxIndices;
+	for (std::size_t wheelIdx = FIRST_WHEEL_IDX; wheelIdx < wheels.size(); ++wheelIdx)
+	{
+		maxIndices.push_back(wheels[wheelIdx].length() - 1);
+	}
+	return maxIndices;
+}

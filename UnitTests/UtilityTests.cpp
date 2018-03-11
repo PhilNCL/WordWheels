@@ -73,77 +73,7 @@ TEST(UtilityString, MakeStringUnique)
 }
 
 
-TEST(Utility, NextConfiguration)
-{
-	std::vector<std::size_t> indices = { 7, 8, 8, 4, 8, 8 };
-	std::vector<std::size_t> originalIndices = indices;
 
-	NextConfiguration(indices, originalIndices);
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 8);
-	EXPECT_EQ(indices[5], 7);
-
-	for (int i = 0; i < 7; ++i)
-	{
-		NextConfiguration(indices, originalIndices);
-	}
-
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 8);
-	EXPECT_EQ(indices[5], 0);
-
-	NextConfiguration(indices, originalIndices);
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 7);
-	EXPECT_EQ(indices[5], 8);
-
-	for (int i = 0; i < 8; ++i)
-	{
-		NextConfiguration(indices, originalIndices);
-	}
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 7);
-	EXPECT_EQ(indices[5], 0);
-
-	NextConfiguration(indices, originalIndices);
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 6);
-	EXPECT_EQ(indices[5], 8);
-
-	for (int i = 0; i < 9 * 6 + 8; ++i)
-	{
-		NextConfiguration(indices, originalIndices);
-	}
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 4);
-	EXPECT_EQ(indices[4], 0);
-	EXPECT_EQ(indices[5], 0);
-
-	NextConfiguration(indices, originalIndices);
-	EXPECT_EQ(indices[0], 7);
-	EXPECT_EQ(indices[1], 8);
-	EXPECT_EQ(indices[2], 8);
-	EXPECT_EQ(indices[3], 3);
-	EXPECT_EQ(indices[4], 8);
-	EXPECT_EQ(indices[5], 8);
-}
 
 
 TEST(Utility, GenerateDictionary)

@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Wheels\ConfigurationManager.h" />
     <ClInclude Include="Utility\CommonTypes.h" />
     <ClInclude Include="Utility\UtilityFunctions.h" />
     <ClInclude Include="Wheels\Dictionary.h" />
@@ -27,6 +28,7 @@
     <ClInclude Include="Wheels\WheelManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Wheels\ConfigurationManager.cpp" />
     <ClCompile Include="Utility\UtilityFunctions.cpp" />
     <ClCompile Include="Wheels\Dictionary.cpp" />
     <ClCompile Include="Utility\FileManager.cpp" />

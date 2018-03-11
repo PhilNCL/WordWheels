@@ -104,9 +104,6 @@ TEST(WheelManager, FindDictionaryInWheels)
 	iter = std::find(foundWords.begin(), foundWords.end(), "BRIAN");
 	EXPECT_TRUE(iter != foundWords.end());
 
-	iter = std::find(foundWords.begin(), foundWords.end(), "AND");
-	EXPECT_TRUE(iter != foundWords.end());
-
 	iter = std::find(foundWords.begin(), foundWords.end(), "AM");
 	EXPECT_TRUE(iter != foundWords.end());
 
@@ -117,7 +114,8 @@ TEST(WheelManager, FindDictionaryInWheels)
 	iter = std::find(foundWords.begin(), foundWords.end(), "ABBA");
 	EXPECT_FALSE(iter != foundWords.end());
 
-
+	iter = std::find(foundWords.begin(), foundWords.end(), "AND");
+	EXPECT_FALSE(iter != foundWords.end());
 }
 
 TEST(WheelManager, BuildString)

@@ -1,21 +1,31 @@
 #pragma once
+// Filename:	WheelManager.h
+// Description: 
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:		
 
 // Standard Includes
 #include <string>
-#include <vector>
 
-#include "../Utility/CommonTypes.h"
+// Utilities
+#include "../Utility/CommonTypes.h" // StringVec
 
+// Forward Declarations
 class Dictionary;
 
 class WheelManager
 {
-public:
+	static const int FIRST_WHEEL_IDX = 0;
+public: // Constructors
 	WheelManager(std::size_t minWordSize = 2);
 	WheelManager(const std::string& filepath, std::size_t minWordSize = 2);
 	~WheelManager();
 
+
 	void AddWheel(const std::string& wheel);
+
+
 	void LoadWheelsFromFile(const std::string& filepath);
 	
 	std::size_t GetNumWheels() const;
@@ -42,5 +52,8 @@ private:
 	void RemoveDuplicateLetters();
 
 	bool IsFinalConfiguration(const std::vector<std::size_t>& configuration) const;
+
+	// Returns a vector with an element equal to the maximum valid index of each wheel in wheels
+	std::vector<std::size_t> GetMaxWheelIndices() const;
 };
 

@@ -1,10 +1,15 @@
-// Note : Uses sort() which stores strings in ACSII order. Requires more checks if expecting 
-// words not in English e.g. diacritical marks
+// Filename:	Dictionary.cpp
+// Description: Defines methods for Dictionary class
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:		
 #include "Dictionary.h"
 
+// Standard Includes
 #include <algorithm> // find(), sort(), copy_if(), distance()
-#include <cassert>
+#include <cassert>	 // assert()
 
+// Utilities
 #include "../Utility/FileManager.h"
 #include "../Utility/UtilityFunctions.h"
 
@@ -44,7 +49,7 @@ void Dictionary::AddWord(const std::string& word)
 	wordList.push_back(upperCase);
 }
 
-void Dictionary::LoadWordsFromFile(const std::string& filepath)
+bool Dictionary::LoadWordsFromFile(const std::string& filepath)
 {
 	FileManager fileManager;
 	std::stringstream dictionaryFile;
@@ -52,6 +57,11 @@ void Dictionary::LoadWordsFromFile(const std::string& filepath)
 	if (fileManager.LoadFile(filepath, dictionaryFile))
 	{
 		LoadWords(dictionaryFile);
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 
 }
@@ -85,7 +95,7 @@ void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) co
 		keyWords = StringVec();
 	}
 }
-#include <iostream>
+
 void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords, std::size_t wordSize) const
 {
 	if (!isValidKey(key))
