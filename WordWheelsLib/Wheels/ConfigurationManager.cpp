@@ -24,7 +24,7 @@ ConfigurationManager::~ConfigurationManager()
 }
 
 
-// Note: In this implementation the index of the first wheel is fixed to allow for threading functionality to be added quickly
+// In the final configuration all indices are zero (except the first wheel which is fixed for threading)
 bool   ConfigurationManager::IsFinalConfiguration() const
 {
 	const std::size_t FIRST_WHEEL_IDX = 0;

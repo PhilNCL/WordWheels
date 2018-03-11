@@ -96,14 +96,16 @@ std::string WheelManager::GetWheel(std::size_t idx) const
 	}
 }
 
-void WheelManager::WheelWordsInDictionary(const Dictionary& dictionary) 
+void WheelManager::FindWordsInDictionary(const Dictionary& dictionary) 
 {
 	if (wheels.empty())
 	{
 		return;
 	}
+	matchingWords.clear();
+
 	std::vector<std::thread> threads;
-	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
+	for (std::size_t startCharIdx = 0; startCharIdx < wheels[FIRST_WHEEL_IDX].length(); ++startCharIdx)
 	{
 		threads.push_back(std::thread(&WheelManager::CheckWheelCombinations, this, std::ref(startCharIdx), std::ref(dictionary)));
 	}
@@ -187,20 +189,6 @@ void WheelManager::RemoveDuplicateLetters()
 	}
 }
 
-// In the final configuration all indices are zero (except the first wheel which is fixed for threading)
-bool WheelManager::IsFinalConfiguration(const std::vector<std::size_t>& configuration) const
-{
-	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
-
-	for (std::size_t idx = SECOND_WHEEL_IDX; idx < wheels.size(); ++idx)
-	{
-		if (configuration[idx])
-		{
-			return false;
-		}
-	}
-	return true;
-}
 
 std::string  WheelManager::BuildString(std::vector<std::size_t> configuration) const
 {
