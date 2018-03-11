@@ -59,7 +59,7 @@ bool Dictionary::LoadWordsFromFile(const std::string& filepath)
 	}
 	else
 	{
-		PrintError(Errors::FILE_LOAD_FAILED, filepath);
+		HandleError(Errors::FILE_LOAD_FAILED, filepath);
 		return false;
 	}
 

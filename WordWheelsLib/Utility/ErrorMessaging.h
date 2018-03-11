@@ -11,4 +11,4 @@ namespace Errors
 			 };
 }
 
-void PrintError(Errors::Error  errorType, const std::string& extraInfo = "");
+void HandleError(Errors::Error  errorType, const std::string& extraInfo = "");
