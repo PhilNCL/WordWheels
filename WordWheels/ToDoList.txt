@@ -37,5 +37,6 @@ system("Pause")
 10) Reduce magic numbers in tests
 11) Horrible names e.g. WordsInDictionary
 12) Consider what happens e.g. UnitTest for GenerateDictionary AN AN appears twice.
+13) int -> size_t
 Checks:
 1) All functions have capital letter

@@ -106,14 +106,22 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	wheelConfiguration[0] = startCharIdx;
 	
 	std::vector<std::vector<std::string>> targetDictionary;
+
+	// Fist pass
 	std::string configString = BuildString(wheelConfiguration);
 	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
-	//IsSubstringinString
+	configString = BuildString(wheelConfiguration);
+	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
+	// Refresh Pass
 	while (!IsFinalConfiguration(wheelConfiguration))
 	{
+		std::size_t chopIndex;
+		std::vector<StringVec> potentialWords;
+		NextConfiguration(wheelConfiguration, maximumIndices, chopIndex);
 		configString = BuildString(wheelConfiguration);
-		WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
-		NextConfiguration(wheelConfiguration, maximumIndices);
+		RefreshDictionary(configString, targetDictionary, dictionary, chopIndex, MIN_WORD_SIZE);
+		BreakString(configString, chopIndex, MIN_WORD_SIZE, potentialWords);
+		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
 	}
 }
 

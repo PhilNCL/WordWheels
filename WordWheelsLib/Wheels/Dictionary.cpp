@@ -80,6 +80,10 @@ void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) co
 	{
 		keyWords = keyIter->second;
 	}
+	else
+	{
+		keyWords = StringVec();
+	}
 }
 
 bool Dictionary::isValidWord(const std::string& word) const

@@ -21,15 +21,18 @@ void MakeUpperCase(const std::string& originalString, std::string& upperCaseStri
 // Alphabetical order, does no case check
 void MakeStringUnique(std::string& sameCaseString);
 
-void BreakString(std::string originalString, std::size_t index, std::size_t minWordSize, std::vector<std::string>& strings);
+void BreakString(const std::string& string, std::size_t index, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings);
 
 
 // Non string utility functions***************
 void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration);
-void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, int& indexChanged);
+void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, std::size_t& indexChanged);
 
 
 // Wheel Functions???
 void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);
 
-void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, int minWordSize);
+void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, std::size_t minWordSize);
+void RefreshDictionary(const std::string& sourceString, std::vector <Wheels::StringVec>& currentDictionary, const Dictionary* sourceDictionary, std::size_t index, std::size_t minWordSize);
+
+void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords);

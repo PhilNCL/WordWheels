@@ -180,17 +180,60 @@ TEST(Utility, BreakString)
 {
 
 	const std::string sourceString = "ACTIVISION";
-	std::vector<std::string> strings;
+	std::vector<std::vector<std::string>> strings;
 
 	BreakString(sourceString, 1, 2, strings);
-	EXPECT_EQ(strings.size(), 9 + 8);
+	EXPECT_EQ(strings[0].size(), 9);
+	EXPECT_EQ(strings[1].size(), 8);
+	EXPECT_EQ(strings[2].size(), 0);
+	EXPECT_EQ(strings[3].size(), 0);
+	EXPECT_EQ(strings[4].size(), 0);
+	EXPECT_EQ(strings[5].size(), 0);
+	EXPECT_EQ(strings[6].size(), 0);
+	EXPECT_EQ(strings[7].size(), 0);
+	EXPECT_EQ(strings[8].size(), 0);
+	EXPECT_EQ(strings[9].size(), 0);
 	strings.clear();
 
 	BreakString(sourceString, 5, 2, strings);
-	EXPECT_EQ(strings.size(), 5 + 5 + 5 + 5 + 5 + 4);
+	EXPECT_EQ(strings[0].size(), 5);
+	EXPECT_EQ(strings[1].size(), 5);
+	EXPECT_EQ(strings[2].size(), 5);
+	EXPECT_EQ(strings[3].size(), 5);
+	EXPECT_EQ(strings[4].size(), 5);
+	EXPECT_EQ(strings[5].size(), 4);
+	EXPECT_EQ(strings[6].size(), 0);
+	EXPECT_EQ(strings[7].size(), 0);
+	EXPECT_EQ(strings[8].size(), 0);
+	EXPECT_EQ(strings[9].size(), 0);
 	strings.clear();
 
 	BreakString(sourceString, 9, 2, strings);
-	EXPECT_EQ(strings.size(), 9);
+	EXPECT_EQ(strings[0].size(), 9);
+	EXPECT_EQ(strings[1].size(), 0);
+	EXPECT_EQ(strings[2].size(), 0);
+	EXPECT_EQ(strings[3].size(), 0);
+	EXPECT_EQ(strings[4].size(), 0);
+	EXPECT_EQ(strings[5].size(), 0);
+	EXPECT_EQ(strings[6].size(), 0);
+	EXPECT_EQ(strings[7].size(), 0);
+	EXPECT_EQ(strings[8].size(), 0);
+	EXPECT_EQ(strings[9].size(), 0);
 	strings.clear();
+}
+
+
+TEST(Utility, RefreshDictionary)
+{
+	Dictionary dictionary(TEST_DICTIONARY_PATH);
+	std::string sourceString = "ABRIDGE";
+	std::vector<std::vector<std::string>> targetDictionary;
+	GenerateDictionary(sourceString, &dictionary, targetDictionary, 2);
+	EXPECT_EQ(targetDictionary[0].size(), 4);
+	EXPECT_EQ(targetDictionary[1].size(), 1);
+
+	sourceString[1] = 'S';
+	RefreshDictionary(sourceString, targetDictionary, &dictionary, 1, 2);
+	EXPECT_EQ(targetDictionary[0].size(), 2);
+	EXPECT_EQ(targetDictionary[1].size(), 0);
 }
