@@ -17,10 +17,13 @@ class Dictionary
 	static const std::size_t DEFAULT_MAX_WORD_SIZE = 10;
 public: // Constructors
 	// Constructs an empty dictionary
-	Dictionary(std::size_t maxValidWordSize = DEFAULT_MAX_WORD_SIZE, std::size_t minValidWordSize = DEFAULT_MIN_WORD_SIZE);
+	Dictionary(std::size_t maxValidWordSize = DEFAULT_MAX_WORD_SIZE, 
+			   std::size_t minValidWordSize = DEFAULT_MIN_WORD_SIZE);
 
 	// Constructs a dictionary and loads words from filepath.
-	Dictionary(const std::string& filepath, std::size_t maxValidWordSize = DEFAULT_MAX_WORD_SIZE, std::size_t minValidWordSize = DEFAULT_MIN_WORD_SIZE);
+	Dictionary(const std::string& filepath, 
+			   std::size_t maxValidWordSize = DEFAULT_MAX_WORD_SIZE, 
+			   std::size_t minValidWordSize = DEFAULT_MIN_WORD_SIZE);
 
 	~Dictionary();
 
@@ -34,7 +37,9 @@ public: // Interface
 
 	// All strings with length less than wordSize associated with key are stored in the StringVec keyWords. keyWords will be empty 
 	// after function call if no words are found.  Note: The key is case insensitive and keyWords is not sorted.
-	void GetWordsFromKey(const std::string& key, Wheels::StringVec& keyWords, std::size_t wordSize) const;
+	void GetWordsFromKey(const std::string& key, 
+						 Wheels::StringVec& keyWords, 
+						 std::size_t wordSize) const;
 
 	// Attempts to load a file at filepath and add all words without testing for duplication. Returns false if fails to open file.
 	bool LoadWordsFromFile(const std::string& filepath);

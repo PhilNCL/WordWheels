@@ -1,15 +1,14 @@
 #pragma once
 // Filename:	WheelManager.h
-// Description: Stores wheels and allows searching in a  
+// Description: Stores and controls searching of wheels
 // Author:		Philip Jones
 // Date:		11/03/18
 // Notes:		Employs simple threading, running one thread for each starting character on the first wheel
 
 // Standard Includes
-#include <mutex> // std::lockguard(), std::mutex
-#include <string>
-#include <vector>
-
+#include <mutex>  // std::lockguard(), std::mutex
+#include <string> // std::string
+#include <vector> // std::vector
 
 // Utilities
 #include "../Utility/CommonTypes.h" // StringVec
@@ -51,20 +50,41 @@ public: // Interface
 	// Returns a string corresponding to the characters of the input wheel configuration
 	std::string BuildString(std::vector<std::size_t> configuration) const;
 
+
+protected: // Algorithm functions
+	// Sets up initial configuration of the wheel before launching checks on all permutations
+	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary& dictionary);
+
+	// Iterates through all permutations of the wheel recording any matching words
+	void CheckAllConfigurations(ConfigurationManager& configuration, 
+								const Dictionary& dictionary);
+
+	// Adds to matchingWords any words in potentialWords present in the vector dictionary currentDictionary
+	void AddWordsFromVectorDictionary(std::vector <Wheels::StringVec>& currentDictionary, 
+									  std::vector<Wheels::StringVec>& potentialWords);
+
+	// Adds to matching words any valid substring of the string argument which is in the dictionary 
+	void AddSubstringsInDictionary(const std::string& string, 
+								   std::size_t minWordSize, 
+								   const Dictionary& dictionary);
+
 protected: // Helper functions for LoadWheelsFromFile()
 	// Wheel files expect format to be first line Number of Wheels and second line Number of letters per wheel
-	void ReadHeader(std::stringstream& wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const;
+	void ReadHeader(std::stringstream& wheelFile,
+					std::size_t& numWheels, 
+					std::size_t& lettersPerWheel) const;
 
 	// Wheel files expect format to be the header followed by numWheels lines each line representing 
 	// one wheel of lettersPerWheel characters
-	void ReadWheels(std::stringstream& wheelFile, std::size_t numWheels, std::size_t lettersPerWheel);
+	void ReadWheels(std::stringstream& wheelFile, 
+					std::size_t numWheels, 
+					std::size_t lettersPerWheel);
 
 	// Duplicate letters on a wheel have no effect on the number of outputs so are culled for efficiency
 	void RemoveDuplicateLetters();
 
-protected: 
-	// Iterates through all permutations of the wheel recording any matching words
-	void CheckWheelCombinations(std::size_t startCharIdx, const Dictionary& dictionary);
+	// Thread safe push back for found matching words
+	void AddFoundWord(std::string newWord);
 
 protected: // Members
 	const int MIN_WORD_SIZE;
@@ -77,27 +97,5 @@ protected: // Members
 
 	// Guards write access to matchingWords
 	std::mutex matchingWordMutex;
-
-
-
-
-
-	// Thread safe push back for found matching words
-	void AddFoundWord(std::string newWord);
-
-
-	void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector<Wheels::StringVec>& potentialWords);
-	void WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary& dictionary);
-
-	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary& dictionary);
-
-
-
-
-
-
-
-
-
 };
 

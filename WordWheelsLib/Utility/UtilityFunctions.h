@@ -24,7 +24,7 @@ void FindSubstringsFromList(const std::string& word, const Wheels::StringVec& po
 bool IsSubstringInString(const std::string& string, const std::string& substring);
 
 // Creates an upper case version of original string into upperCaseString
-void MakeUpperCase(const std::string& originalString, std::string& upperCaseString);
+std::string MakeUpperCase(const std::string& originalString);
 
 // Removes duplicate characters from inputString. After a call to MakeStringUnique the characters of input string will be in alphabetical order. 
 // Does no case checking

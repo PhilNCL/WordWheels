@@ -61,12 +61,11 @@ void ConfigurationManager::NextConfiguration()
 	UpdateLowestChangedIndex();
 }
 
-#include <iostream>
+
 void ConfigurationManager::UpdateLowestChangedIndex()
 {
 	if (lastChangedIndex < lowestChangedIndex)
 	{
 		lowestChangedIndex = lastChangedIndex;
-		std::cout << lastChangedIndex << std::endl;
 	}
 }

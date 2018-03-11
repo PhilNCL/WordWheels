@@ -9,8 +9,8 @@
 #include <algorithm> // find(), sort(), copy_if(), distance()
 
 // Utilities
-#include "../Utility/FileManager.h"
-#include "../Utility/UtilityFunctions.h"
+#include "../Utility/FileManager.h"			// FileManager
+#include "../Utility/UtilityFunctions.h"	// MakeUpperCase()
 #include "../Utility/ErrorMessaging.h"		// PrintError()
 
 using namespace Wheels;
@@ -31,7 +31,6 @@ Dictionary::~Dictionary()
 }
 
 
-
 void Dictionary::AddWord(const std::string& word)
 {
 	if (!isValidWord(word))
@@ -39,8 +38,8 @@ void Dictionary::AddWord(const std::string& word)
 		return;
 	}
 
-	std::string upperCase;
-	MakeUpperCase(word, upperCase);
+	
+	std::string upperCase = MakeUpperCase(word);
 	std::string keyWord = upperCase.substr(0, MIN_WORD_SIZE);
 	
 	auto& wordList = dictionary[keyWord];
@@ -74,49 +73,6 @@ void Dictionary::LoadWords(std::stringstream& dicFile)
 	}
 }
 
-void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) const
-{
-	if (!isValidKey(key))
-	{
-		return;
-	}
-
-	std::string keyWord;
-	MakeUpperCase(key, keyWord);
-
-	auto keyIter = dictionary.find(keyWord);
-	if (keyIter != dictionary.end())
-	{
-		keyWords = keyIter->second;
-	}
-	else
-	{
-		keyWords = StringVec();
-	}
-}
-
-void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords, std::size_t wordSize) const
-{
-	if (!isValidKey(key))
-	{
-		return;
-	}
-	std::string keyWord;
-	MakeUpperCase(key, keyWord);
-
-	auto keyIter = dictionary.find(keyWord);
-	if (keyIter != dictionary.end())
-	{
-		keyWords.resize(keyIter->second.size());
-		auto it = std::copy_if(keyIter->second.begin(), keyIter->second.end(), keyWords.begin(), [&wordSize](const std::string& s) {return (s.size()<= wordSize); });
-		keyWords.resize(std::distance(keyWords.begin(), it));
-	}
-	else
-	{
-		keyWords = StringVec();
-	}
-}
-
 bool Dictionary::isValidWord(const std::string& word) const
 {
 	if (word.size() < MIN_WORD_SIZE || word.size() > MAX_WORD_SIZE)
@@ -140,3 +96,46 @@ bool Dictionary::isValidKey(const std::string& key) const
 		return true;
 	}
 }
+
+void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) const
+{
+	if (!isValidKey(key))
+	{
+		return;
+	}
+	
+	std::string keyWord = MakeUpperCase(key);
+
+	auto keyIter = dictionary.find(keyWord);
+	if (keyIter != dictionary.end())
+	{
+		keyWords = keyIter->second;
+	}
+	else
+	{
+		keyWords = StringVec();
+	}
+}
+
+void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords, std::size_t wordSize) const
+{
+	if (!isValidKey(key))
+	{
+		return;
+	}
+
+	std::string keyWord = MakeUpperCase(key);
+
+	auto keyIter = dictionary.find(keyWord);
+	if (keyIter != dictionary.end())
+	{
+		keyWords.resize(keyIter->second.size());
+		auto it = std::copy_if(keyIter->second.begin(), keyIter->second.end(), keyWords.begin(), [&wordSize](const std::string& s) {return (s.size()<= wordSize); });
+		keyWords.resize(std::distance(keyWords.begin(), it));
+	}
+	else
+	{
+		keyWords = StringVec();
+	}
+}
+

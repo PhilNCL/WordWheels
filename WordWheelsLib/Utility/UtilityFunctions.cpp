@@ -58,10 +58,12 @@ bool IsSubstringInString(const std::string& string, const std::string& substring
 	}
 }
 
-void MakeUpperCase(const std::string& originalString, std::string& upperCaseString)
+std::string MakeUpperCase(const std::string& originalString)
 {
+	std::string upperCaseString;
 	upperCaseString.resize(originalString.length());
 	std::transform(originalString.begin(), originalString.end(), upperCaseString.begin(), ::toupper);
+	return upperCaseString;
 }
 
 void MakeStringUnique(std::string& upperCaseString) 

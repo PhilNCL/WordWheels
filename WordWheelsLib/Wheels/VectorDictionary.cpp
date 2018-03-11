@@ -1,5 +1,12 @@
+// Filename:	VectorDictionary.h
+// Description: Definitions for VectorDictionary functions
+// Author:		Philip Jones
+// Date:		12/03/18
+// Notes:	
+
 #include "VectorDictionary.h"
 
+// Standard Includes
 #include <algorithm>  // std::min(), std::max()
 
 // Wheel includes
@@ -8,7 +15,10 @@
 // Namespace 
 using namespace Wheels;
 
-void GenerateDictionary(const std::string& sourceString, const Dictionary& sourceDictionary, std::vector<StringVec>& targetDictionary, std::size_t minWordSize)
+void GenerateDictionary(const std::string& sourceString, 
+						const Dictionary& sourceDictionary, 
+						std::vector<StringVec>& targetDictionary, 
+						std::size_t minWordSize)
 {
 	std::size_t endChar = sourceString.length() - minWordSize;
 
@@ -20,7 +30,11 @@ void GenerateDictionary(const std::string& sourceString, const Dictionary& sourc
 	}
 }
 
-void UpdateDictionary(const std::string& sourceString, std::vector <StringVec>& currentDictionary, const Dictionary& sourceDictionary, std::size_t index, std::size_t minWordSize)
+void UpdateDictionary(const std::string& sourceString, 
+					  std::vector <StringVec>& currentDictionary, 
+					  const Dictionary& sourceDictionary, 
+					  std::size_t index, 
+					  std::size_t minWordSize)
 {
 	const std::size_t zeroIdx = 0;
 	std::size_t minIdx = (index > minWordSize) ? index - minWordSize + 1 : zeroIdx;
