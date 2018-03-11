@@ -49,6 +49,7 @@ void ConfigurationManager::NextConfiguration()
 		if (currentConfiguration[index])
 		{
 			--currentConfiguration[index];
+			lastChangedIndex = index;
 			while (index != currentConfiguration.size() - 1)
 			{
 				++index;

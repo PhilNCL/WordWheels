@@ -24,10 +24,7 @@ void MakeStringUnique(std::string& sameCaseString);
 void BreakString(const std::string& string, std::size_t index, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings);
 
 
-// Non string utility functions***************
-void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration);
-void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, std::size_t& indexChanged);
-
+// Non string utility functions**************
 
 // Wheel Functions???
 void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, Wheels::StringVec& matchingWords);

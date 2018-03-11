@@ -114,7 +114,6 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
 	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
 	// Refresh Pass
-
 	while (!configuration.IsFinalConfiguration())
 	{
 		std::vector<StringVec> potentialWords(configString.size() - 1); //TODO: - 1 with MIN_WORDS?

@@ -89,44 +89,6 @@ void  WordsInDictionary(const std::string& string, std::size_t minWordSize, cons
 }
 
 
-void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration)
-{
-	assert(currentConfiguration.size() == initialConfiguration.size());
-
-	for (int index = currentConfiguration.size() - 1; index != 0; --index)
-	{
-		if (currentConfiguration[index])
-		{
-			--currentConfiguration[index];
-			while (index != currentConfiguration.size() - 1)
-			{
-				++index;
-				currentConfiguration[index] = initialConfiguration[index];
-			}
-			break;
-		}
-	}
-}
-
-void NextConfiguration(std::vector<std::size_t>& currentConfiguration, const std::vector<std::size_t>& initialConfiguration, std::size_t& indexChanged)
-{
-	assert(currentConfiguration.size() == initialConfiguration.size());
-
-	for (int index = currentConfiguration.size() - 1; index != 0; --index)
-	{
-		if (currentConfiguration[index])
-		{
-			--currentConfiguration[index];
-			indexChanged = index;
-			while (index != currentConfiguration.size() - 1)
-			{
-				++index;
-				currentConfiguration[index] = initialConfiguration[index];
-			}
-			break;
-		}
-	}
-}
 
 void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector<StringVec>& targetDictionary, std::size_t minWordSize)
 {
