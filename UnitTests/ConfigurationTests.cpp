@@ -1,6 +1,13 @@
-//Description Unit Tests for Interpreter
+// Filename:	ConfigurationTests.cpp
+// Description: Unit Tests for ConfigurationManager Class
+// Author:		Philip Jones
+// Date:		12/03/18
+// Notes:
+
+// GoogleTest Includes
 #include <gtest\gtest.h>
 
+// Wheels Includes
 #include <Wheels\ConfigurationManager.h>
 
 TEST(Configuration, NextConfiguration)

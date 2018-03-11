@@ -1,4 +1,9 @@
-//Description Unit Tests for Interpreter
+// Filename:	WheelManagerTests.cpp
+// Description: Unit Tests for the WheelManager class
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:
+
 #include <gtest\gtest.h>
 
 #include <Utility\FileManager.h>

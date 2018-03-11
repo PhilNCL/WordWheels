@@ -1,11 +1,22 @@
-//Description Unit Tests for Interpreter
+// Filename:	DictionaryTests.cpp
+// Description: Unit Tests for Dictionary Class
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:
+
+// Standard Includes
+#include <vector>		// std::vector
+
+// Google Test Includes
 #include <gtest\gtest.h>
 
+// Wheel Includes
+#include <Wheels\Dictionary.h>	
 
-#include <Wheels\Dictionary.h>
+// Utility Includes
 #include <Utility\FileConstants.h>
 
-#include <vector>
+
 
 using namespace FileConstants;
 

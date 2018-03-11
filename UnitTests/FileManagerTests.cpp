@@ -1,6 +1,13 @@
-//Description Unit Tests for Interpreter
+// Filename:	FileManagerTests.cpp
+// Description: Unit Tests for FileManager Class
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:
+
+// Google Test Includes
 #include <gtest\gtest.h>
 
+// Utility Includes
 #include <Utility\FileManager.h>
 #include <Utility\FileConstants.h>
 

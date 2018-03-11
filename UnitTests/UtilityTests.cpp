@@ -1,4 +1,10 @@
-//Description Unit Tests for Interpreter
+// Filename:	UtilityTests.cpp
+// Description: Unit Tests for the Utility Functions
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:
+
+
 #include <gtest\gtest.h>
 
 #include <Utility\UtilityFunctions.h>
