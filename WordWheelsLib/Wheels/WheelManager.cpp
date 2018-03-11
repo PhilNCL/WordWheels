@@ -105,9 +105,13 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	std::vector<std::size_t> wheelConfiguration = maximumIndices;
 	wheelConfiguration[0] = startCharIdx;
 	
+	std::vector<std::vector<std::string>> targetDictionary;
+	std::string configString = BuildString(wheelConfiguration);
+	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
+	//IsSubstringinString
 	while (!IsFinalConfiguration(wheelConfiguration))
 	{
-		std::string configString = BuildString(wheelConfiguration);
+		configString = BuildString(wheelConfiguration);
 		WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
 		NextConfiguration(wheelConfiguration, maximumIndices);
 	}

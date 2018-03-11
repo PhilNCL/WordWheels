@@ -21,7 +21,7 @@ void MakeUpperCase(const std::string& originalString, std::string& upperCaseStri
 // Alphabetical order, does no case check
 void MakeStringUnique(std::string& sameCaseString);
 
-
+void BreakString(std::string originalString, std::size_t index, std::size_t minWordSize, std::vector<std::string>& strings);
 
 
 // Non string utility functions***************

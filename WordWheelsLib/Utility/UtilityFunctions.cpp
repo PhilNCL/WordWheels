@@ -57,6 +57,24 @@ void MakeStringUnique(std::string& upperCaseString)
 	upperCaseString.erase(lastChar, upperCaseString.end());
 }
 
+void BreakString(std::string originalString, std::size_t chopIndex, std::size_t minWordSize, std::vector<std::string>& strings)
+{
+	assert(chopIndex > 0 && chopIndex < originalString.length());
+
+	for (std::size_t startIdx = 0; startIdx <= chopIndex; ++startIdx)
+	{
+		for (std::size_t endIdx = chopIndex; endIdx < originalString.length(); ++endIdx)
+		{
+			std::size_t length = endIdx + 1 - startIdx;
+			if (length >= minWordSize)
+			{
+				strings.push_back(originalString.substr(startIdx, length));
+			}
+
+		}
+	}
+}
+
 void  WordsInDictionary(const std::string& string, std::size_t minWordSize, const Dictionary* dictionary, StringVec& matchingWords)
 {
 	std::size_t endChar = string.length() - minWordSize;

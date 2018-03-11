@@ -174,3 +174,23 @@ TEST(Utility, GenerateDictionary)
 	EXPECT_TRUE(iter != targetDictionary[10].end());
 
 }
+
+
+TEST(Utility, BreakString)
+{
+
+	const std::string sourceString = "ACTIVISION";
+	std::vector<std::string> strings;
+
+	BreakString(sourceString, 1, 2, strings);
+	EXPECT_EQ(strings.size(), 9 + 8);
+	strings.clear();
+
+	BreakString(sourceString, 5, 2, strings);
+	EXPECT_EQ(strings.size(), 5 + 5 + 5 + 5 + 5 + 4);
+	strings.clear();
+
+	BreakString(sourceString, 9, 2, strings);
+	EXPECT_EQ(strings.size(), 9);
+	strings.clear();
+}
