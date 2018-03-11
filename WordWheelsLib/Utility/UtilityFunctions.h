@@ -6,8 +6,8 @@
 // Notes:
 
 // Standard Includes
-#include <string>
-#include <vector>
+#include <string>		// std::string
+#include <vector>		// std::vector
 
 // Utility includes
 #include "CommonTypes.h" // StringVec
@@ -18,7 +18,9 @@ class Dictionary;
 bool ReverseStringCompare(const std::string& left, const std::string& right);
 
 // Finds or all strings in potential words adds to matching words those which are substrings of word
-void FindSubstringsFromList(const std::string& word, const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingStrings);
+void FindSubstringsFromList(const std::string& word, 
+							const Wheels::StringVec& potentialWords, 
+							Wheels::StringVec& matchingStrings);
 
 // Returns true if substring is in string [case sensitive]
 bool IsSubstringInString(const std::string& string, const std::string& substring);
@@ -26,10 +28,14 @@ bool IsSubstringInString(const std::string& string, const std::string& substring
 // Creates an upper case version of original string into upperCaseString
 std::string MakeUpperCase(const std::string& originalString);
 
-// Removes duplicate characters from inputString. After a call to MakeStringUnique the characters of input string will be in alphabetical order. 
+// Removes duplicate characters from inputString. 
+// After a call to MakeStringUnique the characters of input string will be in alphabetical order. 
 // Does no case checking
 void MakeStringUnique(std::string& inputString);
 
-// This function helps to maintain efficiency by not checking same substrings repeatedly.
-void BreakString(const std::string& string, std::size_t index, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings);
+// Stores in strings those substrings which have not previously been present in the input string argument
+// based on the last changed index, lowestChangedIndex and minWordSize arguments
+void GenerateNewSubstrings(const std::string& string, std::size_t index, 
+				 std::size_t lowestChangedIndex, std::size_t minWordSize, 
+				std::vector<std::vector<std::string>>& strings);
 

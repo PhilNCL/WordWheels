@@ -1,5 +1,5 @@
 // Filename:	ConfigurationManager.cpp
-// Description: Methods for ConfigurationManager.h
+// Description: Methods for ConfigurationManager class
 // Author:		Philip Jones
 // Date:		12/03/18
 // Notes:		

@@ -26,7 +26,7 @@ public: // Constructor
 
 	~ConfigurationManager();
 
-public: // Getters
+public: // Interface
 	inline const std::vector<std::size_t>& GetCurrentConfig() const  { return currentConfiguration; }
 	inline std::size_t					   GetLastChangedIndex() const { return lastChangedIndex; }
 	inline std::size_t					   GetLowestChangedIndex() const { return lowestChangedIndex; }
@@ -38,6 +38,7 @@ public: // Getters
 	void NextConfiguration();
 
 protected: // Helper functions
+	// Keeps track of lowest 'wheel' in the configuration that has been altered from the original 
 	void UpdateLowestChangedIndex();
 
 protected: // Members

@@ -118,7 +118,7 @@ void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration,
 		configString = BuildString(configuration.GetCurrentConfig());
 
 		UpdateDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
-		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
+		GenerateNewSubstrings(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
 
 		AddWordsFromVectorDictionary(targetDictionary, potentialWords);
 	}

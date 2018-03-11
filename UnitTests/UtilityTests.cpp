@@ -113,13 +113,13 @@ TEST(Utility, GenerateDictionary)
 }
 
 
-TEST(Utility, BreakString)
+TEST(Utility, GenerateNewSubstrings)
 {
 
 	const std::string sourceString = "ACTIVISION";
 	std::vector<std::vector<std::string>> strings(sourceString.size());
 
-	BreakString(sourceString, 1, 1, 2, strings);
+	GenerateNewSubstrings(sourceString, 1, 1, 2, strings);
 	EXPECT_EQ(strings[0].size(), 9);
 	EXPECT_EQ(strings[1].size(), 8);
 	EXPECT_EQ(strings[2].size(), 0);
@@ -132,7 +132,7 @@ TEST(Utility, BreakString)
 	EXPECT_EQ(strings[9].size(), 0);
 	strings = std::vector<std::vector<std::string>>(sourceString.size());
 
-	BreakString(sourceString, 5, 5, 2, strings);
+	GenerateNewSubstrings(sourceString, 5, 5, 2, strings);
 	EXPECT_EQ(strings[0].size(), 5);
 	EXPECT_EQ(strings[1].size(), 5);
 	EXPECT_EQ(strings[2].size(), 5);
@@ -145,7 +145,7 @@ TEST(Utility, BreakString)
 	EXPECT_EQ(strings[9].size(), 0);
 	strings = std::vector<std::vector<std::string>>(sourceString.size());
 
-	BreakString(sourceString, 9, 9, 2, strings);
+	GenerateNewSubstrings(sourceString, 9, 9, 2, strings);
 	EXPECT_EQ(strings[0].size(), 1);
 	EXPECT_EQ(strings[1].size(), 1);
 	EXPECT_EQ(strings[2].size(), 1);
@@ -166,7 +166,7 @@ TEST(Utility, BreakStringWithLowestIndex)
 	const std::string sourceString = "ACTIVISION";
 	std::vector<std::vector<std::string>> strings(sourceString.size());
 
-	BreakString(sourceString, 1, 0, 2, strings);
+	GenerateNewSubstrings(sourceString, 1, 0, 2, strings);
 	EXPECT_EQ(strings[0].size(), 9);
 	EXPECT_EQ(strings[1].size(), 0);
 	EXPECT_EQ(strings[2].size(), 0);
@@ -179,7 +179,7 @@ TEST(Utility, BreakStringWithLowestIndex)
 	EXPECT_EQ(strings[9].size(), 0);
 	strings = std::vector<std::vector<std::string>>(sourceString.size());
 
-	BreakString(sourceString, 5, 2, 2, strings);
+	GenerateNewSubstrings(sourceString, 5, 2, 2, strings);
 	EXPECT_EQ(strings[0].size(), 5);
 	EXPECT_EQ(strings[1].size(), 5);
 	EXPECT_EQ(strings[2].size(), 5);
@@ -192,7 +192,7 @@ TEST(Utility, BreakStringWithLowestIndex)
 	EXPECT_EQ(strings[9].size(), 0);
 	strings = std::vector<std::vector<std::string>>(sourceString.size());
 
-	BreakString(sourceString, 9, 4, 2, strings);
+	GenerateNewSubstrings(sourceString, 9, 4, 2, strings);
 	EXPECT_EQ(strings[0].size(), 1);
 	EXPECT_EQ(strings[1].size(), 1);
 	EXPECT_EQ(strings[2].size(), 1);

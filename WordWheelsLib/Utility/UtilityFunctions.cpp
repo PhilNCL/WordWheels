@@ -30,7 +30,9 @@ bool ReverseStringCompare(const std::string& left, const std::string& right)
 
 }
 
-void FindSubstringsFromList(const std::string& string, const StringVec& potentialWords, StringVec& matchingStrings)
+void FindSubstringsFromList(const std::string& string, 
+							const StringVec& potentialWords, 
+							StringVec& matchingStrings)
 {
 	for (auto& subStr : potentialWords)
 	{
@@ -73,7 +75,9 @@ void MakeStringUnique(std::string& upperCaseString)
 	upperCaseString.erase(lastChar, upperCaseString.end());
 }
 
-void BreakString(const std::string& string, std::size_t chopIndex, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings)
+void GenerateNewSubstrings(const std::string& string, std::size_t chopIndex, 
+				 std::size_t lowestChangedIndex, std::size_t minWordSize, 
+				 std::vector<std::vector<std::string>>& strings)
 {
 	assert(chopIndex > 0 && chopIndex < string.length());
 
