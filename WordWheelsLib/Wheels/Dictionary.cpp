@@ -7,19 +7,17 @@
 
 // Standard Includes
 #include <algorithm> // find(), sort(), copy_if(), distance()
-#include <cassert>	 // assert()
 
 // Utilities
 #include "../Utility/FileManager.h"
 #include "../Utility/UtilityFunctions.h"
+#include "../Utility/ErrorMessaging.h"		// PrintError()
 
 using namespace Wheels;
 
 Dictionary::Dictionary(std::size_t maxValidWordSize, std::size_t minValidWordSize) :
 	MIN_WORD_SIZE(minValidWordSize), MAX_WORD_SIZE(maxValidWordSize)
 {
-	assert(minValidWordSize > 0);
-	assert(maxValidWordSize > 0);
 }
 
 Dictionary::Dictionary(const std::string& filepath, std::size_t maxValidWordSize, std::size_t minValidWordSize) :

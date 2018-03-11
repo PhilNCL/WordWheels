@@ -9,6 +9,7 @@
 
 #include <Utility\UtilityFunctions.h>
 #include <Utility\FileConstants.h> \\TEST_DICTIONARY_PATH
+#include <Wheels\VectorDictionary.h>
 #include <Wheels\Dictionary.h> \\TODO: Move
 #include <vector>
 using namespace FileConstants;
@@ -217,7 +218,7 @@ TEST(Utility, RefreshDictionary)
 	EXPECT_EQ(targetDictionary[1].size(), 1);
 
 	sourceString[1] = 'S';
-	RefreshDictionary(sourceString, targetDictionary, &dictionary, 1, 2);
+	UpdateDictionary(sourceString, targetDictionary, &dictionary, 1, 2);
 	EXPECT_EQ(targetDictionary[0].size(), 0);
 	EXPECT_EQ(targetDictionary[1].size(), 0);
 }

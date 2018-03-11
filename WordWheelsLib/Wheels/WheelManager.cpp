@@ -20,6 +20,7 @@
 // Standard Includes
 #include <cassert>  // assert()
 #include <fstream>	// std::ifstream
+#include <iostream> // std::cin
 #include <sstream>  // std::stringstream
 #include <thread>   // std::thread
 
@@ -28,9 +29,11 @@
 #include "../Utility/UtilityFunctions.h"
 #include "../Utility/ErrorMessaging.h"
 
+
 // Wheel Includes
 #include "Dictionary.h"
 #include "ConfigurationManager.h"
+#include "VectorDictionary.h"       // GenerateDictionary(), UpdateDictionary()
 
 // Namespace Declarations
 using std::ifstream;
@@ -69,6 +72,7 @@ void WheelManager::LoadWheelsFromFile(const std::string& filepath)
 	else
 	{
 		PrintError(Errors::FILE_LOAD_FAILED, filepath);
+		std::cin.get();
 		exit(Errors::FILE_LOAD_FAILED);
 	}
 
@@ -135,7 +139,7 @@ void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, c
 		configuration.NextConfiguration();
 		configString = BuildString(configuration.GetCurrentConfig());
 
-		RefreshDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
+		UpdateDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
 		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
 
 		MatchingWordsInDictionary(targetDictionary, potentialWords);
@@ -146,8 +150,13 @@ void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWhe
 {
 	wheelFile >> numWheels;
 	wheelFile >> lettersPerWheel;
-	assert(numWheels >= MIN_WORD_SIZE);
-	assert(lettersPerWheel >= 0);
+	if (numWheels >= MIN_WORD_SIZE || lettersPerWheel <= 0)
+	{
+		PrintError(Errors::INVALID_FILE_HEADER);
+		std::cin.get();
+		exit(Errors::INVALID_FILE_HEADER);
+	}
+
 }
 
 
@@ -157,9 +166,23 @@ void  WheelManager::ReadWheels(std::stringstream& wheelFile, std::size_t numWhee
 	while (wheelFile >> wheel)
 	{
 		wheels.push_back(wheel);
-		assert(wheel.length() == lettersPerWheel);
+		if (wheel.length() != lettersPerWheel)
+		{
+			if (numWheels < MIN_WORD_SIZE || lettersPerWheel <= 0)
+			{
+				PrintError(Errors::INVALID_FILE_FORMAT);
+				std::cin.get();
+				exit(Errors::INVALID_FILE_FORMAT);
+			}
+		}
+	
 	}
-	assert(wheels.size() == numWheels);
+	if (wheels.size() != numWheels)
+	{
+		PrintError(Errors::INVALID_FILE_FORMAT);
+		std::cin.get();
+		exit(Errors::INVALID_FILE_FORMAT);
+	};
 }
 
 void WheelManager::RemoveDuplicateLetters()

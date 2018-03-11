@@ -33,7 +33,3 @@ void MakeStringUnique(std::string& inputString);
 // This function helps to maintain efficiency by not checking same substrings repeatedly.
 void BreakString(const std::string& string, std::size_t index, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings);
 
-
-// Non string utility functions**************
-void GenerateDictionary(const std::string& sourceString, const Dictionary* sourceDictionary, std::vector <Wheels::StringVec>& targetDictionary, std::size_t minWordSize);
-void RefreshDictionary(const std::string& sourceString, std::vector <Wheels::StringVec>& currentDictionary, const Dictionary* sourceDictionary, std::size_t index, std::size_t minWordSize);

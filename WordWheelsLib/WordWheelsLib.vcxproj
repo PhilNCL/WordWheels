@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Utility\ErrorMessaging.h" />
+    <ClInclude Include="Wheels\VectorDictionary.h" />
     <ClInclude Include="Wheels\ConfigurationManager.h" />
     <ClInclude Include="Utility\CommonTypes.h" />
     <ClInclude Include="Utility\UtilityFunctions.h" />
@@ -30,6 +31,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Utility\ErrorMessaging.cpp" />
+    <ClCompile Include="Wheels\VectorDictionary.cpp" />
     <ClCompile Include="Wheels\ConfigurationManager.cpp" />
     <ClCompile Include="Utility\UtilityFunctions.cpp" />
     <ClCompile Include="Wheels\Dictionary.cpp" />

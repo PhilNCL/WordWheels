@@ -9,7 +9,7 @@
 #include <string>
 
 // Utilities
-#include "../Utility/CommonTypes.h" // StringVec and DictionaryMap
+#include "../Utility/CommonTypes.h" // StringVec DictionaryMap
 
 class Dictionary
 {
