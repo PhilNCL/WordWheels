@@ -85,6 +85,7 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 	// TODO: What if wheels is empty???
 	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
+		std::cout << startCharIdx + 1 << " out of " << wheels[0].length() << std::endl;
 		CheckWheelCombinations(startCharIdx, dictionary, matchingWords);
 	}
 }
@@ -116,13 +117,13 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 	std::size_t lowestChangedIndex = configString.size() - 1;
 	while (!IsFinalConfiguration(wheelConfiguration))
 	{
-		
 		std::size_t chopIndex;
 		std::vector<StringVec> potentialWords(configString.size() - 1); //TODO: - 1 with MIN_WORDS?
 		NextConfiguration(wheelConfiguration, maximumIndices, chopIndex);
 		if (chopIndex < lowestChangedIndex)
 		{
 			lowestChangedIndex = chopIndex;
+			std::cout << lowestChangedIndex <<std::endl;
 		}
 		configString = BuildString(wheelConfiguration);
 		RefreshDictionary(configString, targetDictionary, dictionary, chopIndex, MIN_WORD_SIZE);

@@ -2,7 +2,7 @@
 // words not in English e.g. diacritical marks
 #include "Dictionary.h"
 
-#include <algorithm> // find(), sort()
+#include <algorithm> // find(), sort(), copy_if(), distance()
 #include <cassert>
 
 #include "../Utility/FileManager.h"
@@ -79,6 +79,28 @@ void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords) co
 	if (keyIter != dictionary.end())
 	{
 		keyWords = keyIter->second;
+	}
+	else
+	{
+		keyWords = StringVec();
+	}
+}
+#include <iostream>
+void Dictionary::GetWordsFromKey(const std::string& key, StringVec& keyWords, std::size_t wordSize) const
+{
+	if (!isValidKey(key))
+	{
+		return;
+	}
+	std::string keyWord;
+	MakeUpperCase(key, keyWord);
+
+	auto keyIter = dictionary.find(keyWord);
+	if (keyIter != dictionary.end())
+	{
+		keyWords.resize(keyIter->second.size());
+		auto it = std::copy_if(keyIter->second.begin(), keyIter->second.end(), keyWords.begin(), [&wordSize](const std::string& s) {return (s.size()<= wordSize); });
+		keyWords.resize(std::distance(keyWords.begin(), it));
 	}
 	else
 	{

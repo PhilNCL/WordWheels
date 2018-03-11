@@ -282,6 +282,6 @@ TEST(Utility, RefreshDictionary)
 
 	sourceString[1] = 'S';
 	RefreshDictionary(sourceString, targetDictionary, &dictionary, 1, 2);
-	EXPECT_EQ(targetDictionary[0].size(), 2);
+	EXPECT_EQ(targetDictionary[0].size(), 0);
 	EXPECT_EQ(targetDictionary[1].size(), 0);
 }

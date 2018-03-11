@@ -135,3 +135,25 @@ TEST(Dictionary, CaseInsensitive)
 	EXPECT_EQ(words.size(), 1);
 	words.clear();
 }
+
+TEST(Dictionary, GetWordsBelowSize)
+{
+	Dictionary dictionary;
+	dictionary.LoadWordsFromFile(TEST_DICTIONARY_PATH);
+
+	std::vector<std::string> words;
+	dictionary.GetWordsFromKey("ab", words, 4);
+	EXPECT_EQ(words.size(), 2);
+
+	words.clear();
+	dictionary.GetWordsFromKey("al", words, 4);
+	EXPECT_EQ(words.size(), 1);
+
+	words.clear();
+	dictionary.GetWordsFromKey("br", words, 8);
+	EXPECT_EQ(words.size(), 1);
+
+	words.clear();
+	dictionary.GetWordsFromKey("am", words, 1);
+	EXPECT_EQ(words.size(), 0);
+}

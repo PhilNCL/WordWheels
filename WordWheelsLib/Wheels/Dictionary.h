@@ -20,7 +20,7 @@ public:
 	void AddWord(const std::string& word);
 	// key must be equal to MIN_WORD_SIZE
 	void GetWordsFromKey(const std::string& key, Wheels::StringVec& keyWords) const;
-
+	void GetWordsFromKey(const std::string& key, Wheels::StringVec& keyWords, std::size_t wordSize) const;
 	void LoadWordsFromFile(const std::string& filepath);
 protected:
 	// Map from the first MIN_WORD_SIZE characters of the word to the word

@@ -135,26 +135,26 @@ void GenerateDictionary(const std::string& sourceString, const Dictionary* sourc
 	for (std::size_t startChar = 0; startChar <= endChar; ++startChar)
 	{
 		StringVec potentialWords;
-		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), potentialWords);
+		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), potentialWords, sourceString.size() - startChar);
 		targetDictionary.push_back(potentialWords);
 	}
 }
 
-
+#include <iostream>
 void RefreshDictionary(const std::string& sourceString, std::vector <StringVec>& currentDictionary, const Dictionary* sourceDictionary, std::size_t index, std::size_t minWordSize)
 {
 	std::size_t zeroIdx = 0;
-	std::size_t minIdx = (index > minWordSize) ? index - minWordSize : 0;
+	std::size_t minIdx = (index > minWordSize) ? index - minWordSize + 1 : 0;
 	std::size_t maxIdx = std::min(index + minWordSize - 1, currentDictionary.size());
 
 	for (std::size_t startChar = minIdx; startChar < maxIdx; ++startChar)
 	{
-		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), currentDictionary[startChar]);
+		sourceDictionary->GetWordsFromKey(sourceString.substr(startChar, minWordSize), currentDictionary[startChar], sourceString.size() - startChar);
 	}
 
 }
-#include <iostream>
-void MatchingWordsInDictionary(std::vector <Wheels::StringVec>& currentDictionary, std::vector <Wheels::StringVec>& potentialWords, Wheels::StringVec& matchingWords)
+
+void MatchingWordsInDictionary(std::vector <StringVec>& currentDictionary, std::vector <StringVec>& potentialWords, StringVec& matchingWords)
 {
 	// Refactor
 	assert(currentDictionary.size() == potentialWords.size());
