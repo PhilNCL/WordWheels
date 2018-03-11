@@ -1,8 +1,15 @@
+// Filename:	FileManager.cpp
+// Description: Methods for FileManager class
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:	
 #include "FileManager.h"
 
-#include <fstream>	// std::ifstream
-#include <sstream> // std::stringstream
+// Standard Includes
+#include <fstream>	 // std::ifstream
+#include <sstream>	 // std::stringstream
 
+// Namespaces
 using std::ifstream;
 using std::stringstream;
 

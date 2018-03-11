@@ -1,7 +1,12 @@
 #pragma once
+// Filename:	FileConstants.h
+// Description: A collection of constants related to File I/O in WordWheels
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:	
 
 // Standard Includes
-#include <string>
+#include <string>	// std::string
 
 namespace FileConstants
 {

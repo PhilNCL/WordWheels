@@ -26,7 +26,7 @@ ConfigurationManager::~ConfigurationManager()
 
 
 // Note: In this implementation the index of the first wheel is fixed to allow for threading functionality to be added quickly
-bool   ConfigurationManager::IsFinalConfiguration()
+bool   ConfigurationManager::IsFinalConfiguration() const
 {
 	const std::size_t FIRST_WHEEL_IDX = 0;
 	const std::size_t SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;

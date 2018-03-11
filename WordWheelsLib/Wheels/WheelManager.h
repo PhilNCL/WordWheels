@@ -3,7 +3,7 @@
 // Description: 
 // Author:		Philip Jones
 // Date:		11/03/18
-// Notes:		
+// Notes:		Employs simple threading, running one thread for each starting character on the first wheel
 
 // Standard Includes
 #include <string>
@@ -13,6 +13,7 @@
 
 // Forward Declarations
 class Dictionary;
+class ConfigurationManager;
 
 class WheelManager
 {
@@ -34,6 +35,7 @@ public: // Constructors
 	// Brute force method
 	void WheelWordsInList(const Wheels::StringVec& potentialWords, Wheels::StringVec& matchingWords) const;
 	void WheelWordsInDictionary(const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
+	void CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary, Wheels::StringVec& matchingWords) const;
 
 	std::string BuildString(std::vector<std::size_t> configuration) const;
 protected:

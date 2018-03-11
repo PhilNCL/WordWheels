@@ -3,8 +3,8 @@
 // Description: Stores and loops through different possible configurations
 // Author:		Philip Jones
 // Date:		12/03/18
-// Notes:		Loops through the different permutations in reverse order consider 4 wheels 
-//				with 2 possible states (0 and 1) 
+// Notes:		Loops through the different permutations in reverse order.
+//				Example: Consider 4 'wheels' with 2 possible states (0 and 1) 
 //				Permutation 0: 1 / 1 / 1 / 1  
 //			    Permutation 1: 1 / 1 / 1 / 0
 //				Permutation 2: 1 / 1 / 0 / 1
@@ -17,22 +17,30 @@
 
 class ConfigurationManager
 {
-public:
+public: // Constructor
+	// Creates a ConfigurationManager with initial state equal to initialConfig
 	ConfigurationManager(const std::vector<std::size_t>& initialConfig);
+
+	// Creates a ConfigurationManager with the index of the first 'wheel' locked and otherwise with initial state equal to initialConfig 
 	ConfigurationManager(const std::vector<std::size_t>& initialConfig, std::size_t firstIndex);
+
 	~ConfigurationManager();
 
+public: // Getters
 	inline const std::vector<std::size_t>& GetCurrentConfig() const  { return currentConfiguration; }
 	inline std::size_t					   GetLastChangedIndex() const { return lastChangedIndex; }
 	inline std::size_t					   GetLowestChangedIndex() const { return lowestChangedIndex; }
 
-	bool   IsFinalConfiguration();
+	// Returns true if further calls to NextConfiguration() will have no effect
+	bool   IsFinalConfiguration() const;
 
+	// Moves currentConfiguration to the next permutation
 	void NextConfiguration();
 
-protected:
+protected: // Helper functions
 	void UpdateLowestChangedIndex();
-protected:
+
+protected: // Members
 	std::vector<std::size_t> currentConfiguration;
 	const std::vector<std::size_t> initialConfiguration;
 

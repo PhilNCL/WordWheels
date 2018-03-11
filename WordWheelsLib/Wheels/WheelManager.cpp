@@ -9,6 +9,7 @@
 #include <cassert>  // assert()
 #include <fstream>	// std::ifstream
 #include <sstream>  // std::stringstream
+#include <thread>   // std::thread
 
 // Utilities
 #include "../Utility/FileManager.h"
@@ -68,7 +69,7 @@ std::size_t WheelManager::GetNumWheels() const
 
 std::string WheelManager::GetWheel(std::size_t idx) const
 {
-	if (idx < 0 || idx >= wheels.size())
+	if (idx >= wheels.size())
 	{
 		return std::string();
 	}
@@ -86,7 +87,6 @@ void WheelManager::WheelWordsInList(const StringVec& potentialWords, StringVec& 
 	}
 }
 
-#include<iostream>
 
 void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVec& matchingWords) const
 {
@@ -94,11 +94,16 @@ void WheelManager::WheelWordsInDictionary(const Dictionary* dictionary, StringVe
 	{
 		return;
 	}
-
+	std::vector<std::thread> threads;
 	for (std::size_t startCharIdx = 0; startCharIdx < wheels[0].length(); ++startCharIdx)
 	{
-		std::cout << startCharIdx + 1 << " out of " << wheels[0].length() << std::endl;
+		//threads.push_back(std::thread(&WheelManager::CheckWheelCombinations, this, std::ref(startCharIdx), std::ref(dictionary), std::ref(matchingWords)));
 		CheckWheelCombinations(startCharIdx, dictionary, matchingWords);
+	}
+
+	for (auto& thread : threads) 
+	{
+		thread.join();
 	}
 }
 
@@ -107,25 +112,37 @@ void WheelManager::CheckWheelCombinations(std::size_t startCharIdx, const Dictio
 {
 	ConfigurationManager configuration(GetMaxWheelIndices(), startCharIdx);
 
-	std::vector<std::vector<std::string>> targetDictionary;
-
-	// Fist pass
+	// Initial Pass
 	std::string configString = BuildString(configuration.GetCurrentConfig());
-	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
 	WordsInDictionary(configString, MIN_WORD_SIZE, dictionary, matchingWords);
-	// Refresh Pass
-	while (!configuration.IsFinalConfiguration())
-	{
-		std::vector<StringVec> potentialWords(configString.size() - 1); //TODO: - 1 with MIN_WORDS?
-		configuration.NextConfiguration();
 
-		configString = BuildString(configuration.GetCurrentConfig());
-		RefreshDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
-		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
-		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
-	}
+	//  Run Algorithm
+	CheckAllConfigurations(configuration, dictionary, matchingWords);
 }
 
+void WheelManager::CheckAllConfigurations(ConfigurationManager& configuration, const Dictionary* dictionary, StringVec& matchingWords) const
+{
+	std::vector<std::vector<std::string>> targetDictionary;
+	std::string configString = BuildString(configuration.GetCurrentConfig());
+	GenerateDictionary(configString, dictionary, targetDictionary, MIN_WORD_SIZE);
+	while (!configuration.IsFinalConfiguration())
+	{
+		std::vector<StringVec> potentialWords(configString.size() - 1);
+
+		configuration.NextConfiguration();
+		configString = BuildString(configuration.GetCurrentConfig());
+
+
+		// Words which are on consecutive wheels
+		RefreshDictionary(configString, targetDictionary, dictionary, configuration.GetLastChangedIndex(), MIN_WORD_SIZE);
+		BreakString(configString, configuration.GetLastChangedIndex(), configuration.GetLowestChangedIndex(), MIN_WORD_SIZE, potentialWords);
+
+		MatchingWordsInDictionary(targetDictionary, potentialWords, matchingWords);
+
+		// Non-consecutive wheels
+
+	}
+}
 
 void WheelManager::ReadHeader(std::stringstream & wheelFile, std::size_t& numWheels, std::size_t& lettersPerWheel) const
 {
@@ -174,10 +191,9 @@ void WheelManager::RemoveDuplicateLetters()
 
 bool WheelManager::IsFinalConfiguration(const std::vector<std::size_t>& configuration) const
 {
-	const int FIRST_WHEEL_IDX = 0;
 	const int SECOND_WHEEL_IDX = FIRST_WHEEL_IDX + 1;
 
-	for (int idx = SECOND_WHEEL_IDX; idx < wheels.size(); ++idx)
+	for (std::size_t idx = SECOND_WHEEL_IDX; idx < wheels.size(); ++idx)
 	{
 		if (configuration[idx])
 		{
@@ -193,7 +209,7 @@ std::string  WheelManager::BuildString(std::vector<std::size_t> configuration) c
 
 	std::string wheelConfiguration;
 
-	for (auto wheel = 0; wheel < wheels.size(); ++wheel)
+	for (std::size_t wheel = 0; wheel < wheels.size(); ++wheel)
 	{
 		wheelConfiguration.push_back(wheels[wheel][configuration[wheel]]);
 	}

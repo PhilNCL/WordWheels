@@ -1,14 +1,7 @@
 Comment Headers
-Warnings
 Remove system("pause") & #include <stdlib.h>
-
-Do a const check
 Order of methods
-Switch to release mode
 
-Low Priority:
-Wheel Manager/Dictionary: Loading Multiple Files
-LoadWheelsFromFile Make bool
 
 Dictionary and wheels are highly coupled
 Micro optimisation: Diction ma [tchbox]
@@ -31,16 +24,12 @@ system("Pause")
 4) If you AddWheels and then LoadFile will break
 5) What happens if don't call initalise wheels
 6) change validword form numLetters to numWheels
-7) RVO e.g. Build String
 8) Utility and Utility String
-9) IsFinalConfig into utility
 10) Reduce magic numbers in tests
 11) Horrible names e.g. WordsInDictionary
 12) Consider what happens e.g. UnitTest for GenerateDictionary AN AN appears twice.
-13) int -> size_t
-14) TODO. Size
-15) Can cull dictionary based on index i.e. 5 letters idx is 3 don't add 10 letter word
 16) Lowest changed index into class
 17) Input Check
+18) Make dictionary be a reference not a pointer
 Checks:
 1) All functions have capital letter

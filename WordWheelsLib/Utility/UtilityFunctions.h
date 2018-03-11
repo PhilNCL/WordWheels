@@ -1,9 +1,16 @@
 #pragma once
+// Filename:	UtilityFunctions.h
+// Description: A collection of useful functions for working with strings
+// Author:		Philip Jones
+// Date:		11/03/18
+// Notes:
 
+// Standard Includes
 #include <string>
 #include <vector>
 
-#include "CommonTypes.h"
+// Utility includes
+#include "CommonTypes.h" // StringVec
 
 class Dictionary;
 
@@ -16,11 +23,14 @@ void FindSubstringsFromList(const std::string& word, const Wheels::StringVec& po
 // Returns true if substring is in string [case sensitive]
 bool IsSubstringInString(const std::string& string, const std::string& substring);
 
+// Creates an upper case version of original string into upperCaseString
 void MakeUpperCase(const std::string& originalString, std::string& upperCaseString);
 
-// Alphabetical order, does no case check
-void MakeStringUnique(std::string& sameCaseString);
+// Removes duplicate characters from inputString. After a call to MakeStringUnique the characters of input string will be in alphabetical order. 
+// Does no case checking
+void MakeStringUnique(std::string& inputString);
 
+// This function helps to maintain efficiency by not checking same substrings repeatedly.
 void BreakString(const std::string& string, std::size_t index, std::size_t lowestChangedIndex, std::size_t minWordSize, std::vector<std::vector<std::string>>& strings);
 
 
